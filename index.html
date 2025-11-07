@@ -1,84 +1,302 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html>
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="Weather Tracker IoT project using KMA API, virtual sensors and ESP32 simulation.">
-  <meta property="og:title" content="Group C — Weather Tracker IoT" />
-  <meta property="og:description" content="Smart IoT system that visualizes weather data using virtual sensors." />
+  <!-- Meta tags for social media banners -->
+  <meta name="description" content="Weather Tracker IoT - KMA API hub based virtual sensors and ESP32 simulation." />
+  <meta property="og:title" content="Weather Tracker IoT - Group C"/>
+  <meta property="og:description" content="A software-based IoT system using KMA API, virtual GPS and virtual sensors displayed in VSCode serial monitor."/>
+  <meta property="og:url" content="URL OF THE WEBSITE"/>
+  <meta property="og:image" content="static/images/your_banner_image.png" />
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+  <meta name="twitter:title" content="Weather Tracker IoT - Group C">
+  <meta name="twitter:description" content="KMA API driven virtual sensors and ESP32 simulation demo.">
+  <meta name="twitter:image" content="static/images/your_twitter_banner_image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="keywords" content="IoT, Weather, KMA, ESP32, Wokwi">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="static/images/sejong.png">
+
+  <link rel="icon" type="image/x-icon" href="static/images/sejong.png">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="static/css/index.css">
-  <title>Group C | Weather Tracker IoT</title>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+  <meta charset="UTF-8">
+  <title>Weather Tracker IoT — Group C</title>
+  <style>
+    .publication-title {
+      font-size: 3rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .title-text {
+    background: linear-gradient(90deg, #00f260, #0575e6, #ff0080, #7928ca);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow:
+    2px 2px 4px rgba(0, 0, 0, 0.1),
+    4px 4px 8px rgba(0, 0, 0, 0.2);
+    animation: gradientShift 30s infinite ease-in-out;
+  }
+
+    @keyframes gradientShift {
+      0% { background-position: 48% 50%; }
+      50% { background-position: 52% 50%; }
+      100% { background-position: 48% 50%; }
+    }
+    .publication-links .button {
+  background: linear-gradient(45deg, #00f260, #0575e6, #ff0080, #7928ca);
+  background-size: 300% 300%;
+  color: white !important;
+  font-weight: 600;
+  border: none;
+  transition: background-position 3s ease;
+  text-shadow: 0 0 px black;
+}
+
+.publication-links .button:hover {
+  background-position: 100% 50%;
+  color: #fff !important;
+}
+
+.publication-links .button .icon i,
+.publication-links .button .icon img {
+  filter: drop-shadow(0 0 1px rgba(0,0,0,0.7));
+  vertical-align: middle;
+}
+
+/* spacing between buttons */
+.publication-links .link-block {
+  margin: 0 0.3rem;
+}
+
+  </style>
 </head>
 <body>
 
-<header class="site-header">
-  <div class="container">
-    <h1 class="project-title"><span class="gradient">Weather Tracker IoT</span></h1>
-    <p class="project-sub">Group C — Sejong University IoT Midterm Project</p>
-    <div class="links">
-      <a href="#" class="btn">슬라이드</a>
-      <a href="#" class="btn">코드 리포지토리</a>
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title publication-title">
+    <span class="title-text">Weather Tracker IoT</span>
+  </h1>
+            <div class="is-size-5 publication-authors">
+              <!-- Team members -->
+              <span class="author-block">
+                    <a href="#" target="_blank">Jeongmin Park</a><sup>1</sup>,
+                    <span class="author-block">
+                      <a href="#" target="_blank">Jiho Park</a><sup>2</sup>,
+                    </span>
+                    <span class="author-block">
+                      <a href="#" target="_blank">Jiyun Yang</a><sup>3</sup>
+                    </span>  </br>
+                    <span class="author-block">
+                      <a href="#"  target="_blank">Course Supervisor</a><sup>4</sup>
+                    </span>
+                    <br>
+                    
+                  </div>
+
+                </br>
+                <div class="is-size-5 publication-authors">
+                <div style="text-align: center; margin-bottom: 5px;">
+                    <span class="author-block"><sup>1</sup> Sejong University, Department</span> </br>
+                    <span class="author-block"><sup>2</sup> Sejong University, Department</span> </br>
+                    <span class="author-block"><sup>3</sup> Sejong University, Department</span> </br>
+                    <span class="author-block"><sup>4</sup> Sejong University, AI & Robotics</span>
+                </div>
+            </div>
+            
+        
+            
+
+            <div class="column has-text-centered">
+                <div class="publication-links">
+
+                    <!-- Slides -->
+                    <span class="link-block">
+                        <a href="#" target="_blank"
+                           class="external-link button is-normal is-rounded is-dark">
+                            <span class="icon">
+                                <i class="fas fa-file-alt" style="color: #D3D3D3;"></i>
+                              </span>
+                            <span>Slides</span>
+                        </a>
+                    </span>
+            
+
+                    <!-- GitHub link -->
+                    <span class="link-block">
+                        <a href="#" target="_blank"
+                           class="external-link button is-normal is-rounded is-dark">
+                            <span class="icon">
+                                <i class="fab fa-github" style="color: black;"></i>
+                            </span>
+                            <span>Code</span>
+                        </a>
+                    </span>
+            
+                </div>
+            </div>
+            
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="section hero is-small">
+    <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full">
+      <div class="content">
+            <h2 class="title is-3 has-text-centered" style="background: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7); color: white; padding: 10px; border-radius: 10px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);">
+            Welcome to our Weather Tracker IoT Project
+            </h2>
+          <div class="level-set has-text-justified">
+            <p></p>
+          </div>
+          <div style="border: none; border-radius: 15px; box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4); overflow: hidden; background: linear-gradient(45deg, #0575e6, #7928ca81); padding: 10px;">
+            <video poster="" id="tree" controls muted loop height="100%" style="display: block; width: 100%; border-radius: 15px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);">
+              <!-- Demo video (replace with your demo) -->
+              <source src="static/videos/pet-demo.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</header>
+</section>
 
-<main class="container">
-  <section class="card">
-    <h2>팀 소개</h2>
-    <p><strong>팀명:</strong> Group C</p>
+
+
+<!-- Project overview -->
+<section class="section hero is-small">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full">
+        <div class="content">
+         <h2 class="title is-3" style="background: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7); color: white; padding: 10px; border-radius: 10px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); text-align: center;">
+           Overview
+         </h2>
+        <div class="content has-text-justified">
+            <p>
+              <strong>Weather Tracker IoT</strong> fetches weather data from the Korea Meteorological Administration (KMA) API Hub and simulates a custom GPS location. The system generates virtual sensors such as temperature, humidity, and light, and outputs all collected information to the serial monitor in VSCode via an ESP32 simulation (Wokwi).
+            </p>
+            <p>
+              Key features include simulated GPS location generation, virtual DHT22 sensor readings, LED indicators for weather states, and serial monitor output for debugging and visualization.
+            </p>
+          <img src="static/images/Plan.png" alt="Teaser Diagram" height="100%">
+          <p class="subtitle has-text-centered"></p>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- Method -->
+<section class="section hero is-small">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full">
+        <div class="content">
+         <h2 class="title is-3" style="background: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7); color: white; padding: 10px; border-radius: 10px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); text-align: center;">
+           Method
+         </h2>
+          <div class="content has-text-justified" style="font-size: 1rem;">
+            <p><strong>System Flow:</strong></p>
+            <ol>
+              <li>Retrieve weather XML data from KMA API Hub (https://apihub.kma.go.kr).</li>
+              <li>Generate a random GPS location inside Korea and convert coordinates to city/district names.</li>
+              <li>Simulate virtual sensors (DHT22: temperature & humidity, light sensor) and LED indicators.</li>
+              <li>Print parsed weather and virtual sensor output to VSCode serial monitor for visualization and debugging.</li>
+            </ol>
+            <p><strong>Hardware / Software:</strong> Software-based IoT using VSCode and Wokwi ESP32 simulator. HTTPClient for API calls, XML parsing for weather data handling.</p>
+          </div>
+          <div style="text-align: center;">
+            <img src="static/images/Plan2.png" alt="Method Diagram" style="display: block; width: 100%; border-radius: 15px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);">
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Members & Tasks -->
+<section class="section" id="tasks">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Team Members & Tasks</h2>
     <ul>
-      <li><strong>Jeongmin Park</strong> — Data Parsing</li>
-      <li><strong>Jiho Park</strong> — Sensors & GPS</li>
-      <li><strong>Jiyun Yang</strong> — Serial Output</li>
+      <li><strong>Jeongmin Park</strong> (21011864) — Data Parsing</li>
+      <li><strong>Jiho Park</strong> (21011910) — Sensors & GPS Simulation</li>
+      <li><strong>Jiyun Yang</strong> (22011901) — Serial Output & Integration</li>
     </ul>
-  </section>
 
-  <section class="card">
-    <h2>프로젝트 개요</h2>
-    <p>
-      Weather Tracker IoT는 기상청 API Hub(KMA)에서 실시간 날씨 데이터를 받아, 
-      <strong>ESP32 시뮬레이터(Wokwi)</strong> 상에서 가상의 GPS 좌표와 센서(온도·습도·조도)를 생성합니다. 
-      데이터를 VSCode의 시리얼 모니터에 출력해 실시간 기상 정보를 시각화합니다.
-    </p>
-    <img src="static/images/Plan.png" alt="Project overview" class="fullwidth-img">
-  </section>
-
-  <section class="card">
-    <h2>주요 기능</h2>
+    <h3 class="title is-5">Details</h3>
     <ul>
-      <li><strong>Feeding Automation → Weather Automation:</strong> 기상청 데이터 자동 수집</li>
-      <li><strong>GPS Simulation:</strong> 한국 내 랜덤 위치 생성 및 도시/구 변환</li>
-      <li><strong>Virtual Sensors:</strong> 온도(DHT22), 습도, 조도 센서 모의 출력</li>
-      <li><strong>LED Status:</strong> Red – Sunny, Blue – Rainy, Yellow – Cloudy</li>
-      <li><strong>Serial Monitor:</strong> 데이터 통합 출력 및 디버깅 기능</li>
+      <li>VSCode + Wokwi for ESP32 simulation</li>
+      <li>HTTPClient for KMA API access</li>
+      <li>DHT22 for temperature and humidity simulation</li>
+      <li>LED indicators: Red -> Sunny, Blue -> Rainy, Yellow -> Cloudy</li>
+      <li>Serial Monitor displays location, weather, and virtual sensor values</li>
     </ul>
-  </section>
 
-  <section class="card">
-    <h2>사용 기술 및 도구</h2>
+    <h3 class="title is-5">Timeline (Week schedule)</h3>
     <ul>
-      <li>VSCode + Wokwi (ESP32 Simulator)</li>
-      <li>HTTPClient / KMA API Hub (<a href="https://apihub.kma.go.kr" target="_blank">https://apihub.kma.go.kr</a>)</li>
-      <li>DHT22 Sensor / LED Indicators</li>
-      <li>Serial Monitor / GPS Parsing / XML Data Handling</li>
+      <li><strong>Week 9–10:</strong> Project selection & environment setup</li>
+      <li><strong>Week 11–12:</strong> Retrieve KMA API data, parse XML for weather info</li>
+      <li><strong>Week 13–14:</strong> Generate simulated GPS coordinates, write virtual sensor code</li>
+      <li><strong>Week 15–16:</strong> Debugging, serial output testing, final presentation preparation</li>
     </ul>
-  </section>
+  </div>
+</section>
 
-  <section class="card">
-    <h2>타임라인</h2>
-    <ul>
-      <li><strong>Week 9–10:</strong> 프로젝트 주제 선정 / 환경 설정</li>
-      <li><strong>Week 11–12:</strong> KMA API 데이터 수집 및 파싱</li>
-      <li><strong>Week 13–14:</strong> GPS 좌표 시뮬레이션 + 가상 센서 코딩</li>
-      <li><strong>Week 15–16:</strong> 디버깅 / 결과 출력 / 최종 발표 준비</li>
-    </ul>
-  </section>
+<!-- BibTeX -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>Coming Soon...
+</code></pre>
+  </div>
+</section>
 
-  <section class="card">
-    <h2>데모 비디오</h2>
-    <video controls loop muted class="demo-video">
-      <source src="static/videos/demo.mp4" type="video/mp4">
-      브라우저가 비디오 태그를 지원하지 않습니다.
-    </video>
-  </section
+  <footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This page is adapted from the Academic Project Page Template. You may reuse this website for your project pages. Please keep a link back to the original template in the footer if you publish.
+          </p>
+          <p class="small muted">© 2025 Group C — Sejong University</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+  </html>

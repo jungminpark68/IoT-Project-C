@@ -2,17 +2,24 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="Weather Tracker IoT Project using KMA API and Virtual Sensors">
-  <meta property="og:title" content="Weather Tracker IoT"/>
-  <meta property="og:description" content="IoT project simulating weather data using KMA API and ESP32 virtual sensors"/>
-  <meta property="og:url" content="https://yourwebsite.github.io"/>
+  <!-- Meta tags (kept as original template) -->
+  <meta name="description" content="DESCRIPTION META TAG">
+  <meta property="og:title" content="SOCIAL MEDIA TITLE TAG"/>
+  <meta property="og:description" content="SOCIAL MEDIA DESCRIPTION TAG TAG"/>
+  <meta property="og:url" content="URL OF THE WEBSITE"/>
   <meta property="og:image" content="static/image/your_banner_image.png" />
   <meta property="og:image:width" content="1200"/>
   <meta property="og:image:height" content="630"/>
+  <meta name="twitter:title" content="TWITTER BANNER TITLE META TAG">
+  <meta name="twitter:description" content="TWITTER BANNER DESCRIPTION META TAG">
+  <meta name="twitter:image" content="static/images/your_twitter_banner_image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="keywords" content="KEYWORDS SHOULD BE PLACED HERE">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="icon" type="image/x-icon" href="static/images/sejong.png">
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
   <link rel="stylesheet" href="static/css/bulma.min.css">
   <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="static/css/bulma-slider.min.css">
@@ -21,14 +28,17 @@
   <link rel="stylesheet" href="static/css/index.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
   <script defer src="static/js/fontawesome.all.min.js"></script>
   <script src="static/js/bulma-carousel.min.js"></script>
   <script src="static/js/bulma-slider.min.js"></script>
   <script src="static/js/index.js"></script>
 
+  <meta charset="UTF-8">
   <title>Weather Tracker IoT</title>
 
   <style>
+    /* keep original small styles and add a couple helpers for the PDF and two-column layout */
     .publication-title {
       font-size: 3rem;
       font-weight: bold;
@@ -36,13 +46,13 @@
       align-items: center;
       gap: 0.5rem;
     }
+
     .title-text {
       background: linear-gradient(90deg, #00f260, #0575e6, #ff0080, #7928ca);
       background-size: 200% 200%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1),
-                   4px 4px 8px rgba(0, 0, 0, 0.2);
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1), 4px 4px 8px rgba(0,0,0,0.2);
       animation: gradientShift 30s infinite ease-in-out;
     }
     @keyframes gradientShift {
@@ -50,6 +60,7 @@
       50% { background-position: 52% 50%; }
       100% { background-position: 48% 50%; }
     }
+
     .publication-links .button {
       background: linear-gradient(45deg, #00f260, #0575e6, #ff0080, #7928ca);
       background-size: 300% 300%;
@@ -58,17 +69,49 @@
       border: none;
       transition: background-position 3s ease;
     }
-    .publication-links .button:hover {
-      background-position: 100% 50%;
-      color: #fff !important;
-    }
+    .publication-links .button:hover { background-position: 100% 50%; color: #fff !important; }
     .publication-links .link-block { margin: 0 0.3rem; }
+
+    /* PDF container - make it stretch horizontally while respecting page padding */
+    .pdf-wrapper {
+      width: 100%;
+      max-width: 1400px; /* allow wide screens to show a wider PDF */
+      margin: 0 auto;
+      padding: 6px; /* small padding to avoid touching edges */
+    }
+    .pdf-iframe {
+      width: 100%;
+      height: 520px; /* approx height of one PPT slide — adjust if you want shorter/taller */
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+      display: block;
+    }
+
+    /* Two-column overview: left text, right image */
+    .overview-columns .column {
+      padding: 10px;
+    }
+    .overview-image {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 900px) {
+      .pdf-iframe { height: 360px; } /* smaller devices: reduce height */
+    }
+    @media (max-width: 640px) {
+      .publication-title { font-size: 2rem; }
+      .pdf-iframe { height: 300px; }
+    }
   </style>
 </head>
-
 <body>
 
-  <!-- Header Section (DO NOT MODIFY) -->
+  <!-- ========== HEADER (DO NOT CHANGE) ========== -->
   <section class="hero">
     <div class="hero-body">
       <div class="container is-max-desktop">
@@ -78,19 +121,25 @@
               <span class="title-text"> Weather Tracker IoT </span>
             </h1>
             <div class="is-size-5 publication-authors">
+              <!-- KEEP NAMES & SUPERVISOR AS-IS -->
               <span class="author-block">
-                    <a href="#">Jeongmin Park</a><sup>1</sup>,
-                    <a href="#">Jiho Park</a><sup>2</sup>,
-                    <a href="#">Jiyun Yang</a><sup>3</sup>
-              </span><br>
+                <a href="#" target="_blank">Jeongmin Park</a><sup>1</sup>,
+                <a href="#" target="_blank">Jiho Park</a><sup>2</sup>,
+                <a href="#" target="_blank">Jiyun Yang</a><sup>3</sup>
+              </span>  </br>
               <span class="author-block">
-                    <a href="#">Class Incharge: Muhammad Zubair Islam</a><sup>4</sup>
-              </span><br><br>
-              <div style="text-align: center;">
-                <span class="author-block"><sup>1</sup> Sejong University, Dept. of AI and Robotics</span><br>
-                <span class="author-block"><sup>2</sup> Sejong University, Dept. of AI and Robotics</span><br>
-                <span class="author-block"><sup>3</sup> Sejong University, Dept. of AI and Robotics</span><br>
-                <span class="author-block"><sup>4</sup> Sejong University, Dept. of AI and Robotics</span>
+                <a href="#"  target="_blank">Class Incharge: Muhammad Zubair Islam</a><sup>4</sup>,
+              </span>
+              <br>
+            </div>
+
+            <br>
+            <div class="is-size-5 publication-authors">
+              <div style="text-align: center; margin-bottom: 5px;">
+                <span class="author-block"><sup>1</sup> Sejong University, Department of AI and Robotics</span> </br>
+                <span class="author-block"><sup>2</sup> Sejong University, Department of AI and Robotics</span> </br>
+                <span class="author-block"><sup>3</sup> Sejong University, Department of AI and Robotics</span> </br>
+                <span class="author-block"><sup>4</sup> Sejong University, Department of AI and Robotics</span>
               </div>
             </div>
 
@@ -98,19 +147,16 @@
               <div class="publication-links">
                 <span class="link-block">
                   <a href="https://raw.githubusercontent.com/JiyunElizabethYang/IoT_C/main/IoT%20Project_Midterm%20Presentation.pdf" target="_blank"
-                    class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon">
-                      <i class="fas fa-file-alt" style="color: #D3D3D3;"></i>
-                    </span>
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-alt" style="color: #D3D3D3;"></i></span>
                     <span>Slides</span>
                   </a>
                 </span>
+
                 <span class="link-block">
                   <a href="https://github.com/JiyunElizabethYang/IoT_C" target="_blank"
-                    class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon">
-                      <i class="fab fa-github" style="color: black;"></i>
-                    </span>
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fab fa-github" style="color: black;"></i></span>
                     <span>Code</span>
                   </a>
                 </span>
@@ -123,27 +169,24 @@
     </div>
   </section>
 
-  <!-- ============ MAIN CONTENT MODIFIED FROM HERE ============ -->
-
+  <!-- ============ MAIN: PDF (wide & short) ============ -->
   <section class="section hero is-small">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column is-full">
           <div class="content">
-
-            <h2 class="title is-3 has-text-centered" style="background: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7);
-              color: white; padding: 10px; border-radius: 10px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);">
-              Welcome to Our Weather Tracker IoT Project
+            <h2 class="title is-3 has-text-centered"
+                style="background: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7);
+                       color: white; padding: 10px; border-radius: 10px; box-shadow: 0 8px 16px rgba(0,0,0,0.3);">
+              Project Presentation (PDF)
             </h2>
 
-            <div style="border: none; border-radius: 15px; box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4); overflow: hidden;
-                        background: linear-gradient(45deg, #0575e6, #7928ca81); padding: 10px;">
-              <iframe 
+            <div class="pdf-wrapper" aria-hidden="false">
+              <!-- Use Google Docs viewer wrapper for raw GitHub-hosted PDF (better cross-browser rendering) -->
+              <iframe
+                class="pdf-iframe"
                 src="https://docs.google.com/gview?embedded=true&url=https://raw.githubusercontent.com/JiyunElizabethYang/IoT_C/main/IoT%20Project_Midterm%20Presentation.pdf"
-                width="100%" 
-                height="700px" 
-                style="display:block; border-radius:15px; border:none;"
-                title="IoT Project PDF">
+                title="IoT Project Midterm Presentation (PDF)">
               </iframe>
             </div>
 
@@ -153,70 +196,90 @@
     </div>
   </section>
 
-  <!-- Overview Section -->
+  <!-- ============ OVERVIEW: left text / right image ============ -->
   <section class="section hero is-small">
     <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered"
-          style="background: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7); 
-                 color:white; padding:10px; border-radius:10px; box-shadow:0 8px 16px rgba(0,0,0,0.3);">
-        Overview
-      </h2>
-      <div class="content has-text-justified">
-        <p>
-          The <strong>Weather Tracker IoT</strong> system retrieves real-time weather data from the <strong>KMA API Hub</strong>, 
-          simulates virtual sensors, and visualizes environmental conditions using <strong>ESP32 (Wokwi)</strong> and <strong>VSCode</strong>.
-        </p>
-        <ul>
-          <li>Virtual IoT system using Wokwi & VSCode</li>
-          <li>Weather data from <a href="https://apihub.kma.go.kr" target="_blank">KMA API Hub</a></li>
-          <li>Random GPS coordinates converted to Korean region names</li>
-          <li>Simulated DHT22 & light sensors</li>
-          <li>LED indicators for weather conditions (Sunny, Cloudy, Rainy)</li>
-          <li>Data displayed on serial monitor</li>
-        </ul>
-        <img src="static/images/Plan.png" alt="System Overview" style="width:100%; border-radius:15px; box-shadow:0 8px 16px rgba(0,0,0,0.3);">
+      <div class="columns overview-columns is-vcentered is-variable is-6">
+        <!-- Left: text -->
+        <div class="column is-half">
+          <h2 class="title is-3"
+              style="background: linear-gradient(45deg,#f200b571,#eb419f8e,#0077ff5b,#2881cad7);
+                     color:white; padding:10px; border-radius:10px; box-shadow:0 8px 16px rgba(0,0,0,0.3);">
+            Overview
+          </h2>
+
+          <div class="content has-text-justified">
+            <p>
+              <strong>Weather Tracker IoT</strong> retrieves weather data from the Korea Meteorological Administration's API Hub and simulates a virtual IoT environment using an ESP32 emulator (Wokwi). The system generates virtual sensors (temperature, humidity, light) and simulates GPS locations; all outputs are printed to the VSCode serial monitor for visualization and debugging.
+            </p>
+
+            <h4 class="title is-5">Key features</h4>
+            <ul>
+              <li>Software-based IoT using VSCode + Wokwi (ESP32)</li>
+              <li>Retrieve weather XML via KMA API Hub (<a href="https://apihub.kma.go.kr" target="_blank">apihub.kma.go.kr</a>)</li>
+              <li>Random GPS generation & reverse mapping to Korean regions</li>
+              <li>Virtual sensors (DHT22 for temperature & humidity, simulated light sensor)</li>
+              <li>LED indicators: Red (Sunny) / Blue (Rainy) / Yellow (Cloudy)</li>
+              <li>Serial monitor outputs aggregated weather & sensor data</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Right: image -->
+        <div class="column is-half">
+          <div style="text-align:center;">
+            <img src="static/images/Plan.png" alt="System Plan" class="overview-image">
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Method Section -->
+  <!-- ============ METHOD (keeps existing style) ============ -->
   <section class="section hero is-small">
     <div class="container is-max-desktop">
       <h2 class="title is-3 has-text-centered"
-          style="background: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7); 
+          style="background: linear-gradient(45deg,#f200b571,#eb419f8e,#0077ff5b,#2881cad7);
                  color:white; padding:10px; border-radius:10px; box-shadow:0 8px 16px rgba(0,0,0,0.3);">
         Method
       </h2>
+
       <div class="content has-text-justified">
         <ol>
-          <li>Request weather data from the <strong>KMA API Hub</strong> (XML format).</li>
-          <li>Parse XML data to extract temperature, humidity, and weather status.</li>
-          <li>Simulate virtual sensors using Wokwi (ESP32).</li>
-          <li>Generate a random GPS location within South Korea.</li>
-          <li>Display combined data through serial output.</li>
+          <li>Request weather data (XML) from the KMA API Hub.</li>
+          <li>Parse XML to extract weather, temperature, humidity.</li>
+          <li>Simulate GPS coordinates and virtual sensors on Wokwi (ESP32).</li>
+          <li>Visualize and debug via VSCode serial monitor output.</li>
         </ol>
-        <img src="static/images/Plan2.png" alt="Method Diagram" style="width:100%; border-radius:15px; box-shadow:0 8px 16px rgba(0,0,0,0.3);">
+      </div>
+
+      <div style="text-align:center; margin-top:12px;">
+        <img src="static/images/Plan2.png" alt="Method Diagram" class="overview-image" style="max-width:860px;">
       </div>
     </div>
   </section>
 
-  <!-- Team & Roles -->
-  <section class="section hero is-small">
-    <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered"
-          style="background: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7); 
-                 color:white; padding:10px; border-radius:10px; box-shadow:0 8px 16px rgba(0,0,0,0.3);">
-        Team Members & Tasks
-      </h2>
+  <!-- ============ TEAM / TIMELINE ============ -->
+  <section class="section" id="tasks">
+    <div class="container is-max-desktop content">
+      <h2 class="title">Team Members & Tasks</h2>
       <ul>
-        <li><strong>Jeongmin Park</strong> — Data Parsing</li>
-        <li><strong>Jiho Park</strong> — Sensor & GPS Implementation</li>
-        <li><strong>Jiyun Yang</strong> — Serial Output & Integration</li>
+        <li><strong>Jeongmin Park</strong> (21011864) — Data Parsing</li>
+        <li><strong>Jiho Park</strong> (21011910) — Sensors & GPS Simulation</li>
+        <li><strong>Jiyun Yang</strong> (22011901) — Serial Output & Integration</li>
+      </ul>
+
+      <h3 class="title is-5">Timeline</h3>
+      <ul>
+        <li><strong>Week 9–10:</strong> Project selection & environment setup</li>
+        <li><strong>Week 11–12:</strong> KMA API retrieval & XML parsing</li>
+        <li><strong>Week 13–14:</strong> GPS simulation & virtual sensor coding</li>
+        <li><strong>Week 15–16:</strong> Debugging, testing, and final presentation</li>
       </ul>
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- ============ FOOTER ============ -->
   <footer class="footer">
     <div class="container">
       <div class="columns is-centered">
@@ -231,5 +294,6 @@
       </div>
     </div>
   </footer>
+
 </body>
 </html>

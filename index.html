@@ -33,6 +33,7 @@
   <script src="static/js/index.js"></script>
 
   <title>Weather Tracker IoT</title>
+
   <style>
     .publication-title {
       font-size: 3rem;
@@ -78,15 +79,23 @@
       margin: 0 0.3rem;
     }
 
-    /* ✅ 통일된 박스 스타일 */
-    .section-title {
+    /* ✅ 박스 크기 통일 (Welcome 기준) */
+    .section-box {
       background: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7);
       color: white;
-      padding: 10px;
+      padding: 18px;
       border-radius: 10px;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
       text-align: center;
-      margin-bottom: 20px;
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto 30px auto;
+      height: 70px; /* ✅ 높이 통일 */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.9rem;
+      font-weight: 600;
     }
   </style>
 </head>
@@ -162,7 +171,7 @@
       <div class="columns is-centered">
         <div class="column is-full has-text-centered">
           <div class="content">
-            <h2 class="title is-3 section-title">Welcome to Use This Project</h2>
+            <h2 class="section-box">Welcome to Use This Project</h2>
             <div style="border: none; border-radius: 15px;
                         box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
                         overflow: hidden; background: linear-gradient(45deg, #0575e6, #7928ca81);
@@ -189,7 +198,7 @@
       <div class="columns is-centered">
         <div class="column is-full">
           <div class="content">
-            <h2 class="title is-3 section-title">Overview</h2>
+            <h2 class="section-box">Overview</h2>
             <div class="content has-text-justified">
               <p><b>Weather Tracker IoT</b> is a location-based smart weather monitoring system that retrieves real-time climate information from the <b>Korea Meteorological Administration (KMA)</b> API. It automatically detects the current GPS location and visualizes weather data such as temperature, humidity, and light conditions through simulated sensors in <b>Wokwi</b>.</p>
               <ul>
@@ -210,7 +219,7 @@
       <div class="columns is-centered">
         <div class="column is-full">
           <div class="content">
-            <h2 class="title is-3 section-title">Method</h2>
+            <h2 class="section-box">Method</h2>
             <div class="content has-text-justified">
               <p><b>System Flow:</b></p>
               <ol>

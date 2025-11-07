@@ -11,4 +11,4 @@
 #### - Visualize all information on the Serial Monitor
 
 ### 🌍 Project Homapage
-👉 **[IoT-C Project Homepage](https://jiyunelizabethyang.github.io/IoT_C/)**  
+👉 **[IoT-C Project Homepage](https://jungminpark68.github.io/IoT-Project-C/)**  

@@ -38,6 +38,7 @@
       font-size: 3rem;
       font-weight: bold;
       display: flex;
+      justify-content: center; /* ✅ 가운데 정렬 */
       align-items: center;
       gap: 0.5rem;
     }
@@ -148,7 +149,7 @@
     </div>
   </section>
 
-  <!-- WELCOME SECTION (PDF EMBEDDED, 16:9 RATIO) -->
+  <!-- WELCOME SECTION -->
   <section class="section hero is-small">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
@@ -181,7 +182,7 @@
     </div>
   </section>
 
-  <!-- 나머지는 그대로 -->
+  <!-- OVERVIEW -->
   <section class="section hero is-small">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
@@ -192,10 +193,12 @@
               Overview
             </h2>
             <div class="content has-text-justified">
-              Overview of <b>Weather Tracker IoT</b><br>
-              : A location-based climate monitoring system using Wokwi and the KMA API.<br>
-              <span style="color: #ff69b4;">(Check Location):</span> Uses GPS to determine current location for weather data.<br>
-              <span style="color: #007bff;">(Show Weather):</span> Displays real-time weather information based on the detected location.
+              <p><b>Weather Tracker IoT</b> is a location-based smart weather monitoring system that retrieves real-time climate information from the <b>Korea Meteorological Administration (KMA)</b> API. It automatically detects the current GPS location and visualizes weather data such as temperature, humidity, and light conditions through simulated sensors in <b>Wokwi</b>.</p>
+              <ul>
+                <li>🌦️ <b>Location Check:</b> Retrieves current coordinates and maps them to Korean region names.</li>
+                <li>🌡️ <b>Weather Display:</b> Presents temperature and humidity in real time.</li>
+                <li>💡 <b>Light Sensor:</b> Adjusts LED brightness according to weather conditions.</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -203,6 +206,7 @@
     </div>
   </section>
 
+  <!-- METHOD -->
   <section class="section hero is-small">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
@@ -213,8 +217,15 @@
               Method
             </h2>
             <div class="content has-text-justified">
-              <strong>Smart IoT Weather Monitoring -</strong>
-              Location-Based Climate Tracking and Display Using Wokwi and KMA (Korea Meteorological Administration) API.
+              <p><b>System Flow:</b></p>
+              <ol>
+                <li>1️⃣ Retrieve weather XML data from <b>KMA API Hub</b> using an HTTP client.</li>
+                <li>2️⃣ Generate random GPS coordinates in Korea for simulated location testing.</li>
+                <li>3️⃣ Convert coordinates to city and district names for weather mapping.</li>
+                <li>4️⃣ Simulate <b>DHT22</b> (temperature/humidity), <b>light sensors</b>, and <b>LEDs</b> using <b>Wokwi</b>.</li>
+                <li>5️⃣ Print and visualize data in <b>VSCode Serial Monitor</b> for real-time tracking and debugging.</li>
+              </ol>
+              <p><b>Tools Used:</b> Wokwi Simulator, ESP32 microcontroller, KMA API, VSCode (C++ environment).</p>
             </div>
           </div>
         </div>
@@ -222,6 +233,7 @@
     </div>
   </section>
 
+  <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
       <div class="columns is-centered">

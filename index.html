@@ -2,24 +2,17 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="Weather Tracker IoT - KMA API-based virtual sensors and ESP32 simulation." />
-  <meta property="og:title" content="Weather Tracker IoT - Group C"/>
-  <meta property="og:description" content="Software-based IoT using KMA API Hub, GPS simulation and virtual sensors (ESP32/Wokwi)"/>
-  <meta property="og:url" content="URL OF THE WEBSITE"/>
+  <meta name="description" content="Weather Tracker IoT Project using KMA API and Virtual Sensors">
+  <meta property="og:title" content="Weather Tracker IoT"/>
+  <meta property="og:description" content="IoT project simulating weather data using KMA API and ESP32 virtual sensors"/>
+  <meta property="og:url" content="https://yourwebsite.github.io"/>
   <meta property="og:image" content="static/image/your_banner_image.png" />
   <meta property="og:image:width" content="1200"/>
   <meta property="og:image:height" content="630"/>
-
-  <meta name="twitter:title" content="Weather Tracker IoT - Group C">
-  <meta name="twitter:description" content="KMA API driven virtual sensors and ESP32 simulation demo.">
-  <meta name="twitter:image" content="static/images/your_twitter_banner_image.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="keywords" content="IoT, Weather, KMA, ESP32, Wokwi">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="icon" type="image/x-icon" href="static/images/sejong.png">
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
-
   <link rel="stylesheet" href="static/css/bulma.min.css">
   <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="static/css/bulma-slider.min.css">
@@ -28,12 +21,12 @@
   <link rel="stylesheet" href="static/css/index.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
   <script defer src="static/js/fontawesome.all.min.js"></script>
   <script src="static/js/bulma-carousel.min.js"></script>
   <script src="static/js/bulma-slider.min.js"></script>
   <script src="static/js/index.js"></script>
-  <title>Weather Tracker IoT — Group C</title>
+
+  <title>Weather Tracker IoT</title>
 
   <style>
     .publication-title {
@@ -43,7 +36,6 @@
       align-items: center;
       gap: 0.5rem;
     }
-
     .title-text {
       background: linear-gradient(90deg, #00f260, #0575e6, #ff0080, #7928ca);
       background-size: 200% 200%;
@@ -53,13 +45,11 @@
                    4px 4px 8px rgba(0, 0, 0, 0.2);
       animation: gradientShift 30s infinite ease-in-out;
     }
-
     @keyframes gradientShift {
       0% { background-position: 48% 50%; }
       50% { background-position: 52% 50%; }
       100% { background-position: 48% 50%; }
     }
-
     .publication-links .button {
       background: linear-gradient(45deg, #00f260, #0575e6, #ff0080, #7928ca);
       background-size: 300% 300%;
@@ -68,165 +58,173 @@
       border: none;
       transition: background-position 3s ease;
     }
-
     .publication-links .button:hover {
       background-position: 100% 50%;
+      color: #fff !important;
     }
-
-    .publication-links .link-block {
-      margin: 0 0.3rem;
-    }
+    .publication-links .link-block { margin: 0 0.3rem; }
   </style>
 </head>
 
 <body>
 
-  <!-- HEADER SECTION -->
+  <!-- Header Section (DO NOT MODIFY) -->
   <section class="hero">
     <div class="hero-body">
-      <div class="container is-max-desktop has-text-centered">
-        <h1 class="title publication-title">
-          <span class="title-text">Weather Tracker IoT</span>
-        </h1>
-        <p class="is-size-5">
-          <a href="#">Jeongmin Park</a><sup>1</sup>,
-          <a href="#">Jiho Park</a><sup>2</sup>,
-          <a href="#">Jiyun Yang</a><sup>3</sup><br>
-          <a href="#">Course Supervisor: Muhammad Zubair Islam</a><sup>4</sup>
-        </p>
-        <p class="is-size-6">
-          <sup>1,2,3</sup> Sejong University <br>
-          <sup>4</sup> Department of AI & Robotics
-        </p>
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title publication-title">
+              <span class="title-text"> Weather Tracker IoT </span>
+            </h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                    <a href="#">Jeongmin Park</a><sup>1</sup>,
+                    <a href="#">Jiho Park</a><sup>2</sup>,
+                    <a href="#">Jiyun Yang</a><sup>3</sup>
+              </span><br>
+              <span class="author-block">
+                    <a href="#">Class Incharge: Muhammad Zubair Islam</a><sup>4</sup>
+              </span><br><br>
+              <div style="text-align: center;">
+                <span class="author-block"><sup>1</sup> Sejong University, Dept. of AI and Robotics</span><br>
+                <span class="author-block"><sup>2</sup> Sejong University, Dept. of AI and Robotics</span><br>
+                <span class="author-block"><sup>3</sup> Sejong University, Dept. of AI and Robotics</span><br>
+                <span class="author-block"><sup>4</sup> Sejong University, Dept. of AI and Robotics</span>
+              </div>
+            </div>
 
-        <div class="publication-links">
-          <span class="link-block">
-            <a href="https://raw.githubusercontent.com/JiyunElizabethYang/IoT_C/main/IoT%20Project_Midterm%20Presentation.pdf" target="_blank"
-              class="external-link button is-normal is-rounded is-dark">
-              <span class="icon"><i class="fas fa-file-alt"></i></span>
-              <span>Slides</span>
-            </a>
-          </span>
-          <span class="link-block">
-            <a href="#" target="_blank" class="external-link button is-normal is-rounded is-dark">
-              <span class="icon"><i class="fab fa-github"></i></span>
-              <span>Code</span>
-            </a>
-          </span>
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="https://raw.githubusercontent.com/JiyunElizabethYang/IoT_C/main/IoT%20Project_Midterm%20Presentation.pdf" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-alt" style="color: #D3D3D3;"></i>
+                    </span>
+                    <span>Slides</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://github.com/JiyunElizabethYang/IoT_C" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github" style="color: black;"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PDF SECTION -->
+  <!-- ============ MAIN CONTENT MODIFIED FROM HERE ============ -->
+
   <section class="section hero is-small">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column is-full">
           <div class="content">
-            <h2 class="title is-3 has-text-centered"
-                style="background: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7); 
-                       color: white; padding: 10px; border-radius: 10px; 
-                       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);">
-              Project Presentation PDF
+
+            <h2 class="title is-3 has-text-centered" style="background: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7);
+              color: white; padding: 10px; border-radius: 10px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);">
+              Welcome to Our Weather Tracker IoT Project
             </h2>
 
-            <div style="border: none; border-radius: 15px; 
-                        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4); 
-                        overflow: hidden; background: linear-gradient(45deg, #0575e6, #7928ca81); 
-                        padding: 10px;">
-              <iframe
-                src="https://raw.githubusercontent.com/JiyunElizabethYang/IoT_C/main/IoT%20Project_Midterm%20Presentation.pdf"
-                width="100%"
-                height="700px"
-                style="display: block; border-radius: 15px; 
-                       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); border: none;"
-                title="Project PDF">
+            <div style="border: none; border-radius: 15px; box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4); overflow: hidden;
+                        background: linear-gradient(45deg, #0575e6, #7928ca81); padding: 10px;">
+              <iframe 
+                src="https://docs.google.com/gview?embedded=true&url=https://raw.githubusercontent.com/JiyunElizabethYang/IoT_C/main/IoT%20Project_Midterm%20Presentation.pdf"
+                width="100%" 
+                height="700px" 
+                style="display:block; border-radius:15px; border:none;"
+                title="IoT Project PDF">
               </iframe>
             </div>
+
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- OVERVIEW -->
+  <!-- Overview Section -->
   <section class="section hero is-small">
     <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column is-full">
-          <div class="content">
-            <h2 class="title is-3 has-text-centered"
-                style="background: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7); 
-                       color: white; padding: 10px; border-radius: 10px; 
-                       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);">
-              Overview
-            </h2>
-            <p>The system receives weather data from the KMA API Hub, simulates GPS and sensors, and outputs results via VSCode serial monitor.</p>
-            <ul>
-              <li>Software IoT using VSCode & Wokwi</li>
-              <li>KMA API data retrieval</li>
-              <li>Simulated GPS & virtual sensors</li>
-              <li>Weather visualization & logging</li>
-            </ul>
-            <img src="static/images/Plan.png" alt="Overview Diagram" width="100%">
-          </div>
-        </div>
+      <h2 class="title is-3 has-text-centered"
+          style="background: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7); 
+                 color:white; padding:10px; border-radius:10px; box-shadow:0 8px 16px rgba(0,0,0,0.3);">
+        Overview
+      </h2>
+      <div class="content has-text-justified">
+        <p>
+          The <strong>Weather Tracker IoT</strong> system retrieves real-time weather data from the <strong>KMA API Hub</strong>, 
+          simulates virtual sensors, and visualizes environmental conditions using <strong>ESP32 (Wokwi)</strong> and <strong>VSCode</strong>.
+        </p>
+        <ul>
+          <li>Virtual IoT system using Wokwi & VSCode</li>
+          <li>Weather data from <a href="https://apihub.kma.go.kr" target="_blank">KMA API Hub</a></li>
+          <li>Random GPS coordinates converted to Korean region names</li>
+          <li>Simulated DHT22 & light sensors</li>
+          <li>LED indicators for weather conditions (Sunny, Cloudy, Rainy)</li>
+          <li>Data displayed on serial monitor</li>
+        </ul>
+        <img src="static/images/Plan.png" alt="System Overview" style="width:100%; border-radius:15px; box-shadow:0 8px 16px rgba(0,0,0,0.3);">
       </div>
     </div>
   </section>
 
-  <!-- METHOD -->
+  <!-- Method Section -->
   <section class="section hero is-small">
     <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column is-full">
-          <div class="content">
-            <h2 class="title is-3 has-text-centered"
-                style="background: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7);
-                       color: white; padding: 10px; border-radius: 10px; 
-                       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);">
-              Method
-            </h2>
-            <ol>
-              <li>Fetch XML data from KMA API Hub.</li>
-              <li>Parse data and simulate sensors (DHT22, Light).</li>
-              <li>Generate random GPS coordinates.</li>
-              <li>Display data on serial monitor.</li>
-            </ol>
-            <img src="static/images/Plan2.png" alt="Method Diagram" width="100%">
-          </div>
-        </div>
+      <h2 class="title is-3 has-text-centered"
+          style="background: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7); 
+                 color:white; padding:10px; border-radius:10px; box-shadow:0 8px 16px rgba(0,0,0,0.3);">
+        Method
+      </h2>
+      <div class="content has-text-justified">
+        <ol>
+          <li>Request weather data from the <strong>KMA API Hub</strong> (XML format).</li>
+          <li>Parse XML data to extract temperature, humidity, and weather status.</li>
+          <li>Simulate virtual sensors using Wokwi (ESP32).</li>
+          <li>Generate a random GPS location within South Korea.</li>
+          <li>Display combined data through serial output.</li>
+        </ol>
+        <img src="static/images/Plan2.png" alt="Method Diagram" style="width:100%; border-radius:15px; box-shadow:0 8px 16px rgba(0,0,0,0.3);">
       </div>
     </div>
   </section>
 
-  <!-- MEMBERS -->
-  <section class="section" id="tasks">
-    <div class="container is-max-desktop content">
-      <h2 class="title">Team Members & Tasks</h2>
+  <!-- Team & Roles -->
+  <section class="section hero is-small">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered"
+          style="background: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7); 
+                 color:white; padding:10px; border-radius:10px; box-shadow:0 8px 16px rgba(0,0,0,0.3);">
+        Team Members & Tasks
+      </h2>
       <ul>
         <li><strong>Jeongmin Park</strong> — Data Parsing</li>
-        <li><strong>Jiho Park</strong> — Sensors & GPS</li>
-        <li><strong>Jiyun Yang</strong> — Serial Output</li>
+        <li><strong>Jiho Park</strong> — Sensor & GPS Implementation</li>
+        <li><strong>Jiyun Yang</strong> — Serial Output & Integration</li>
       </ul>
     </div>
   </section>
 
+  <!-- Footer -->
   <footer class="footer">
     <div class="container">
       <div class="columns is-centered">
         <div class="column is-8">
           <div class="content">
             <p>
-              This page was built using the 
-              <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> 
-              adopted from the 
-              <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page. <br>
-              Licensed under 
-              <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">
-                CC BY-SA 4.0
-              </a>.
+              This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> adapted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.<br>
+              Licensed under <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a>.
             </p>
           </div>
         </div>

@@ -38,7 +38,7 @@
       font-size: 3rem;
       font-weight: bold;
       display: flex;
-      justify-content: center; /* ✅ 가운데 정렬 */
+      justify-content: center;
       align-items: center;
       gap: 0.5rem;
     }
@@ -76,6 +76,17 @@
 
     .publication-links .link-block {
       margin: 0 0.3rem;
+    }
+
+    /* ✅ 통일된 박스 스타일 */
+    .section-title {
+      background: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7);
+      color: white;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      margin-bottom: 20px;
     }
   </style>
 </head>
@@ -115,8 +126,6 @@
 
             <div class="column has-text-centered">
               <div class="publication-links">
-
-                <!-- Slides (local PDF) -->
                 <span class="link-block">
                   <a href="static/pdf/IoT_Project_Midterm_Presentation.pdf"
                      target="_blank" rel="noopener"
@@ -128,7 +137,6 @@
                   </a>
                 </span>
 
-                <!-- GitHub Project -->
                 <span class="link-block">
                   <a href="https://github.com/jungminpark68/IoT-Project-C"
                      target="_blank" rel="noopener"
@@ -139,7 +147,6 @@
                     <span>Code</span>
                   </a>
                 </span>
-
               </div>
             </div>
 
@@ -155,13 +162,7 @@
       <div class="columns is-centered">
         <div class="column is-full has-text-centered">
           <div class="content">
-            <h2 class="title is-3"
-                style="background: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7);
-                       color: white; padding: 10px; border-radius: 10px;
-                       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); text-align: center;">
-              Welcome to Use This Project
-            </h2>
-
+            <h2 class="title is-3 section-title">Welcome to Use This Project</h2>
             <div style="border: none; border-radius: 15px;
                         box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
                         overflow: hidden; background: linear-gradient(45deg, #0575e6, #7928ca81);
@@ -188,10 +189,7 @@
       <div class="columns is-centered">
         <div class="column is-full">
           <div class="content">
-            <h2 class="title is-3" style="background: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7); color: white;
-              padding: 10px; border-radius: 10px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); text-align: center;">
-              Overview
-            </h2>
+            <h2 class="title is-3 section-title">Overview</h2>
             <div class="content has-text-justified">
               <p><b>Weather Tracker IoT</b> is a location-based smart weather monitoring system that retrieves real-time climate information from the <b>Korea Meteorological Administration (KMA)</b> API. It automatically detects the current GPS location and visualizes weather data such as temperature, humidity, and light conditions through simulated sensors in <b>Wokwi</b>.</p>
               <ul>
@@ -212,10 +210,7 @@
       <div class="columns is-centered">
         <div class="column is-full">
           <div class="content">
-            <h2 class="title is-3" style="background: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7);
-              color: white; padding: 10px; border-radius: 10px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); text-align: center;">
-              Method
-            </h2>
+            <h2 class="title is-3 section-title">Method</h2>
             <div class="content has-text-justified">
               <p><b>System Flow:</b></p>
               <ol>

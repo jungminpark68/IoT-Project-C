@@ -2,22 +2,27 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="DESCRIPTION META TAG">
-  <meta property="og:title" content="SOCIAL MEDIA TITLE TAG"/>
-  <meta property="og:description" content="SOCIAL MEDIA DESCRIPTION META TAG TAG"/>
+
+  <!-- Social / SEO -->
+  <meta name="description" content="Weather Tracker IoT - Jeongmin Park's Implementation (KMA API Integration + Data Processing + Serial Monitor Output + OLED Graph Visualization)">
+  <meta property="og:title" content="Weather Tracker IoT | Jeongmin Park"/>
+  <meta property="og:description" content="Integrated KMA weather API, processed weather parameters, printed real-time logs on Wokwi Serial Monitor, and implemented OLED graph visualization."/>
   <meta property="og:url" content="URL OF THE WEBSITE"/>
-  <meta property="og:image" content="static/image/doraemong.png" />
+  <meta property="og:image" content="static/images/your_banner_image.png" />
   <meta property="og:image:width" content="1200"/>
   <meta property="og:image:height" content="630"/>
-  <meta name="twitter:title" content="TWITTER BANNER TITLE META TAG">
-  <meta name="twitter:description" content="TWITTER BANNER DESCRIPTION META TAG">
+
+  <meta name="twitter:title" content="Weather Tracker IoT | Jeongmin Park">
+  <meta name="twitter:description" content="KMA API integration + data processing + serial logs + OLED graph visualization.">
   <meta name="twitter:image" content="static/images/your_twitter_banner_image.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="keywords" content="KEYWORDS SHOULD BE PLACED HERE">
+
+  <meta name="keywords" content="IoT, ESP32, Wokwi, KMA API, Weather, XML/JSON Parsing, Serial Monitor, OLED, Graph Visualization, Project Page">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="icon" type="image/x-icon" href="static/images/sejong.png">
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
   <link rel="stylesheet" href="static/css/bulma.min.css">
   <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="static/css/bulma-slider.min.css">
@@ -26,234 +31,513 @@
   <link rel="stylesheet" href="static/css/index.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
   <script defer src="static/js/fontawesome.all.min.js"></script>
   <script src="static/js/bulma-carousel.min.js"></script>
   <script src="static/js/bulma-slider.min.js"></script>
   <script src="static/js/index.js"></script>
 
-  <title>Weather Tracker IoT</title>
+  <meta charset="UTF-8">
+  <title>Weather Tracker IoT | Jeongmin Park</title>
 
   <style>
-    .publication-title {
-      font-size: 3rem;
-      font-weight: bold;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 0.5rem;
+    :root{
+      --grad: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7);
+      --shadow: 0 8px 16px rgba(0,0,0,0.25);
+      --cardshadow: 0 10px 20px rgba(0,0,0,0.18);
+      --radius: 14px;
     }
 
+    body { font-family: "Noto Sans", sans-serif; }
+
+    /* Hero title */
+    .publication-title {
+      font-size: 3rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      line-height: 1.1;
+    }
     .title-text {
       background: linear-gradient(90deg, #00f260, #0575e6, #ff0080, #7928ca);
       background-size: 200% 200%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       text-shadow:
-        2px 2px 4px rgba(0, 0, 0, 0.1),
-        4px 4px 8px rgba(0, 0, 0, 0.2);
-      animation: gradientShift 30s infinite ease-in-out;
+        2px 2px 4px rgba(0, 0, 0, 0.08),
+        4px 4px 10px rgba(0, 0, 0, 0.18);
+      animation: gradientShift 25s infinite ease-in-out;
     }
-
     @keyframes gradientShift {
       0% { background-position: 48% 50%; }
       50% { background-position: 52% 50%; }
       100% { background-position: 48% 50%; }
     }
 
+    /* Buttons */
     .publication-links .button {
       background: linear-gradient(45deg, #00f260, #0575e6, #ff0080, #7928ca);
       background-size: 300% 300%;
       color: white !important;
-      font-weight: 600;
+      font-weight: 800;
       border: none;
-      transition: background-position 3s ease;
+      transition: background-position 2.5s ease;
     }
+    .publication-links .button:hover { background-position: 100% 50%; }
+    .publication-links .link-block { margin: 0 0.35rem; }
 
-    .publication-links .button:hover {
+    /* Team page button */
+    .publication-links .button.team-btn{
+      background: linear-gradient(45deg, #34d399, #60a5fa, #a78bfa);
+      background-size: 300% 300%;
+      box-shadow: 0 10px 22px rgba(0,0,0,0.18);
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+    .publication-links .button.team-btn:hover{
       background-position: 100% 50%;
-      color: #fff !important;
+      transform: translateY(-1px);
     }
 
-    .publication-links .link-block {
-      margin: 0 0.3rem;
+    /* Section title */
+    .section-title {
+      background: var(--grad);
+      color: white !important;
+      padding: 12px 14px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      text-align: center;
+      display: block;
+      width: 100%;
+      margin: 0 auto 14px auto;
     }
+
+    /* Cards */
+    .soft-card{
+      border-radius: var(--radius);
+      box-shadow: var(--cardshadow);
+      border: 1px solid rgba(0,0,0,0.06);
+      background: linear-gradient(45deg, rgba(5,117,230,0.08), rgba(242,0,181,0.06));
+      padding: 1.05rem 1.1rem;
+    }
+
+    /* Layout helpers (different from teammate: 3-step vertical flow + side notes) */
+    .flow{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    @media(min-width: 950px){
+      .flow{
+        grid-template-columns: 1.2fr .8fr;
+        gap: 1.1rem;
+        align-items: start;
+      }
+    }
+
+    /* Chips */
+    .chiprow{ display:flex; flex-wrap:wrap; gap: .45rem; margin-top:.6rem; }
+    .chip{
+      font-size:.78rem;
+      font-weight: 800;
+      padding:.22rem .62rem;
+      border-radius: 999px;
+      background: rgba(121,40,202,0.16);
+      border: 1px solid rgba(121,40,202,0.22);
+      white-space: nowrap;
+    }
+    .chip.alt{
+      background: rgba(5,117,230,0.14);
+      border: 1px solid rgba(5,117,230,0.22);
+    }
+    .chip.ok{
+      background: rgba(0,242,96,0.12);
+      border: 1px solid rgba(0,242,96,0.20);
+    }
+
+    /* Media */
+    .media-frame{
+      border-radius: 16px;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.28);
+      overflow: hidden;
+      background: linear-gradient(45deg, #0575e6, #7928ca81);
+      padding: 10px;
+    }
+    .media-frame video, .media-frame img{
+      display:block;
+      width:100%;
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+    }
+
+    /* Small list spacing */
+    .mini-list li{ margin: .35rem 0; line-height: 1.45; }
+
+    /* Figure caption */
+    .cap{
+      text-align:center;
+      font-size:.78rem;
+      opacity:.85;
+      margin-top:.55rem;
+    }
+
+    /* Callout */
+    .callout{
+      border-radius: var(--radius);
+      border: 1px solid rgba(0,0,0,0.06);
+      box-shadow: var(--cardshadow);
+      background: rgba(255,255,255,0.62);
+      padding: .9rem 1rem;
+    }
+
+    /* Accordion (different feel -> less “copy” vibe) */
+    .faq details{
+      background: rgba(0,0,0,0.03);
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 14px;
+      padding: .75rem .85rem;
+    }
+    .faq details + details{ margin-top: .6rem; }
+    .faq summary{ cursor: pointer; font-weight: 900; }
+
+    a { word-break: break-word; }
   </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-<section class="hero">
-  <div class="hero-body">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+
+            <h1 class="title publication-title">
+              <span class="title-text">Weather Tracker IoT</span>
+            </h1>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://github.com/jungminpark68" target="_blank" rel="noopener noreferrer">Jeongmin Park (jungminpark)</a><sup>1</sup>
+              </span>
+              <br>
+            </div>
+
+            <br>
+
+            <div class="is-size-5 publication-authors">
+              <div style="text-align:center; margin-bottom: 8px;">
+                <span class="author-block"><sup>1</sup> Sejong University, Department of Intelligent Mechatronics Engineering</span><br>
+              </div>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+
+                <span class="link-block">
+                  <a href="YOUR_TEAM_PAGE_URL_HERE"
+                    target="_blank" rel="noopener noreferrer"
+                    class="external-link button is-normal is-rounded is-dark team-btn">
+                    <span class="icon"><i class="fas fa-users"></i></span>
+                    <span>Team Page</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="YOUR_GITHUB_REPO_URL_HERE"
+                     target="_blank" rel="noopener noreferrer"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fab fa-github" style="color:#fff;"></i></span>
+                    <span>Team GitHub</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="YOUR_WOKWI_URL_HERE"
+                     target="_blank" rel="noopener noreferrer"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-tv" style="color:#fff;"></i></span>
+                    <span>Wokwi Demo</span>
+                  </a>
+                </span>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTRO / WHAT I DID -->
+  <section class="section hero is-small">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
-        <div class="column has-text-centered">
-          <h1 class="title publication-title">
-            <span class="title-text">Weather Tracker IoT </span>
-          </h1>
+        <div class="column is-full">
+          <div class="content">
+            <h2 class="title is-3 section-title">Welcome to "Jeongmin's Project Page"</h2>
 
-          <div class="is-size-5 publication-authors">
-            <span class="author-block">
-              <a href="https://github.com/parkjh21c" target="_blank">Jiho Park</a><sup>1</sup>,
-              <a href="https://github.com/jungminpark68" target="_blank">Jeongmin Park</a><sup>2</sup>,
-              <a href="https://github.com/JiyunElizabethYang" target="_blank">Jiyun Yang</a><sup>3</sup>
-            </span><br>
-            <span class="author-block">
-              <a href="https://github.com/zubair1811" target="_blank">Class Incharge: Muhammad Zubair Islam</a><sup>4</sup>
-            </span>
-          </div>
+            <div class="flow">
+              <!-- Left: overview -->
+              <div class="soft-card">
+                <p style="margin-bottom:.7rem;">
+                  This page summarizes <b>my individual contributions</b> to the team project
+                  <b>Weather Tracker IoT</b>. My focus was building a reliable weather data pipeline and
+                  visualizing it in a way that is easy to inspect during simulation.
+                </p>
 
-          <br>
-          <div class="is-size-5 publication-authors">
-            <div style="text-align: center; margin-bottom: 5px;">
-              <span class="author-block"><sup>1</sup> Sejong University, Department of Intelligent Mechatronics Engineering</span><br>
-              <span class="author-block"><sup>2</sup> Sejong University, Department of Intelligent Mechatronics Engineering</span><br>
-              <span class="author-block"><sup>3</sup> Sejong University, Department of Intelligent Mechatronics Engineering</span><br>
-              <span class="author-block"><sup>4</sup> Sejong University, Department of AI and Robotics</span>
+                <p style="margin-top:.7rem; margin-bottom:.4rem;"><b>My responsibilities (high-level):</b></p>
+                <ul class="mini-list">
+                  <li><b>KMA API Integration</b>: Request weather data and handle responses robustly.</li>
+                  <li><b>Data Processing</b>: Parse and transform values into usable parameters (e.g., Temp/Humidity/Rain/Wind).</li>
+                  <li><b>Monitoring & Visualization</b>: Print structured logs and implement OLED-based graph visualization.</li>
+                </ul>
+
+                <div class="chiprow">
+                  <span class="chip ok">API → Parse → Process</span>
+                  <span class="chip alt">Serial Logs</span>
+                  <span class="chip">OLED Graph</span>
+                  <span class="chip alt">Debug-friendly</span>
+                </div>
+              </div>
+
+              <!-- Right: quick facts (different structure vs teammate) -->
+              <div class="callout">
+                <p style="margin-bottom:.45rem;"><b>Quick Notes</b></p>
+                <ul class="mini-list">
+                  <li><b>Goal:</b> Stable real-time weather retrieval + readable output</li>
+                  <li><b>Key outputs:</b> Serial monitor logs, OLED graphs</li>
+                  <li><b>Testing:</b> Validated value updates and display refresh consistency</li>
+                </ul>
+                <p class="is-size-7" style="opacity:.85; margin-top:.6rem;">
+                  Tip: Replace URLs above with your actual team page, repo, and Wokwi links.
+                </p>
+              </div>
             </div>
-          </div>
 
-          <div class="column has-text-centered">
-            <div class="publication-links">
-              <span class="link-block">
-                <a href="static/pdf/IoT_Project_Midterm_Presentation.pdf"
-                   target="_blank" class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon"><i class="fas fa-file-alt"></i></span>
-                  <span>Slides</span>
-                </a>
-              </span>
-              <span class="link-block">
-                <a href="https://github.com/jungminpark68/IoT-Project-C"
-                   target="_blank" class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon"><i class="fab fa-github"></i></span>
-                  <span>Code</span>
-                </a>
-              </span>
+            <br>
+
+            <div class="media-frame">
+              <video id="demo" autoplay controls muted loop>
+                <source src="static/videos/jm_demo.mp4" type="video/mp4">
+              </video>
             </div>
+            <p class="has-text-centered is-size-7" style="margin-top:.5rem; opacity:.85;">
+              Demo video (optional): weather values update in real time, with serial logs and OLED visualization.
+            </p>
+
           </div>
-
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- WELCOME SECTION -->
-<section class="section hero is-small">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered">
-      <div class="column is-full has-text-centered">
-        <div class="content">
-          <h2 class="title is-3" style="background: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7);
-            color: white; padding: 10px; border-radius: 10px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);">
-            Welcome to Use This Project
-          </h2>
+  <!-- MY CONTRIBUTION (SUMMARY + DETAILS with 1:1 captioned figures) -->
+  <section class="section hero is-small">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full">
+          <div class="content">
+            <h2 class="title is-3 section-title">My Contribution</h2>
 
-          <iframe src="static/pdf/IoT_Project_Midterm_Presentation.pdf"
-                  width="800px" height="450px"
-                  style="border:none; border-radius:15px;"></iframe>
+            <!-- Different from teammate: “one-line summary + 3 bullets + expandable details” -->
+            <div class="soft-card" style="margin-bottom: 1rem;">
+              <p style="margin-bottom:.5rem;">
+                <b>One-line summary:</b>
+                I built the <b>weather data pipeline</b> (API integration → parsing/processing → outputs) and delivered
+                <b>debug-friendly visualizations</b> via Serial Monitor and OLED graphs.
+              </p>
+
+              <div class="chiprow">
+                <span class="chip ok">KMA API</span>
+                <span class="chip alt">Parsing & Processing</span>
+                <span class="chip">Serial Output</span>
+                <span class="chip alt">OLED Graph</span>
+              </div>
+            </div>
+
+            <!-- Figures: card per role, image+caption+text 1:1 -->
+            <div class="soft-card" style="margin-bottom: 1rem;">
+              <h3 class="title is-5" style="margin-bottom:.45rem;">(1) KMA API Integration & Data Processing</h3>
+              <p style="margin-bottom:.6rem;">
+                I implemented the request/response flow and extracted essential parameters (e.g., temperature, humidity,
+                rainfall, wind direction/speed) into consistent numeric values used across modules.
+              </p>
+
+              <div class="media-frame">
+                <img src="static/images/jm_api_parse.png" alt="KMA API parsing screenshot">
+              </div>
+              <p class="cap">
+                Figure 1. Example of the API response parsing result (extracted fields mapped into weather parameters).
+              </p>
+
+              <div class="faq" style="margin-top:.8rem;">
+                <details>
+                  <summary>Implementation notes (click)</summary>
+                  <ul class="mini-list" style="margin-top:.55rem;">
+                    <li>Handled base time/date logic for stable request timing (avoids missing recent data).</li>
+                    <li>Parsed response fields and normalized units/format for downstream display.</li>
+                    <li>Validated “value update” by comparing consecutive pulls and checking for missing fields.</li>
+                  </ul>
+                </details>
+              </div>
+            </div>
+
+            <div class="soft-card" style="margin-bottom: 1rem;">
+              <h3 class="title is-5" style="margin-bottom:.45rem;">(2) Real-time Serial Monitor Output (Wokwi)</h3>
+              <p style="margin-bottom:.6rem;">
+                To support quick debugging, I printed structured logs with clear labels and units.
+                This made it easy to verify whether parsing and updates were working correctly in real time.
+              </p>
+
+              <div class="media-frame">
+                <img src="static/images/jm_serial_monitor.png" alt="Wokwi Serial Monitor screenshot">
+              </div>
+              <p class="cap">
+                Figure 2. Serial Monitor output showing real-time updates of processed weather values for debugging.
+              </p>
+
+              <div class="faq" style="margin-top:.8rem;">
+                <details>
+                  <summary>What this helped me verify (click)</summary>
+                  <ul class="mini-list" style="margin-top:.55rem;">
+                    <li>API call success/failure and response validity.</li>
+                    <li>Parsed values are refreshed on schedule (no stale data).</li>
+                    <li>Edge cases (missing fields / unexpected response) are visible immediately.</li>
+                  </ul>
+                </details>
+              </div>
+            </div>
+
+            <div class="soft-card">
+              <h3 class="title is-5" style="margin-bottom:.45rem;">(3) OLED Graph Visualization</h3>
+              <p style="margin-bottom:.6rem;">
+                I implemented an OLED-based graph visualization so that trends can be understood at a glance.
+                Instead of relying only on raw numbers, the graph provides an intuitive view of changes over time.
+              </p>
+
+              <div class="media-frame">
+                <img src="static/images/jm_oled_graph.png" alt="OLED graph visualization screenshot">
+              </div>
+              <p class="cap">
+                Figure 3. OLED screen visualizing weather changes as a graph for quick interpretation.
+              </p>
+
+              <div class="faq" style="margin-top:.8rem;">
+                <details>
+                  <summary>Graph design choices (click)</summary>
+                  <ul class="mini-list" style="margin-top:.55rem;">
+                    <li>Used a compact layout to preserve readability on a 128×64 display.</li>
+                    <li>Refreshed only necessary screen regions to reduce flicker.</li>
+                    <li>Mapped numeric ranges to pixel ranges for stable visualization.</li>
+                  </ul>
+                </details>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- OVERVIEW -->
-<section class="section hero is-small">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered">
-      <div class="column is-full">
-        <div class="content">
-          <h2 class="title is-3" style="background: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7);
-            color: white; padding: 10px; border-radius: 10px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); text-align: center;">
-            Overview
-          </h2>
+  <!-- METHOD (MY IMPLEMENTATION) -->
+  <section class="section hero is-small">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full">
+          <div class="content">
+            <h2 class="title is-3 section-title">Method (My Implementation)</h2>
 
-          <p><b>Weather Tracker IoT</b> is a location-based smart weather monitoring system that retrieves real-time climate
-          information from the <b>Korea Meteorological Administration (KMA)</b> API.</p>
+            <!-- Different from teammate: pipeline-first explanation -->
+            <div class="soft-card" style="margin-bottom: 1rem;">
+              <h3 class="title is-5" style="margin-bottom:.55rem;">Pipeline Overview</h3>
+              <ol class="mini-list">
+                <li><b>Request</b>: Call KMA API with correct base_date/base_time and grid parameters.</li>
+                <li><b>Parse</b>: Extract required categories and convert into numeric values.</li>
+                <li><b>Process</b>: Normalize/format units and store latest values.</li>
+                <li><b>Output</b>: Print logs to Serial Monitor and render values/graphs on OLED.</li>
+              </ol>
+              <div class="chiprow">
+                <span class="chip ok">Stable timing</span>
+                <span class="chip alt">Robust parsing</span>
+                <span class="chip">Readable output</span>
+              </div>
+            </div>
+
+            <!-- Optional: code placeholders -->
+            <div class="soft-card">
+              <h3 class="title is-5" style="margin-bottom:.55rem;">Code Snippets (Optional)</h3>
+              <p style="margin-bottom:.6rem;">
+                If you want to include code here, paste your Arduino/C++ functions (API request, parser, serial print, OLED graph render).
+              </p>
+              <p class="is-size-7" style="opacity:.85;">
+                Tip: You can copy the “Copy button” UI from the teammate page if you want, but keeping this simpler makes it look different.
+              </p>
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- MY CONTRIBUTION -->
-<section class="section hero is-small">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered">
-      <div class="column is-full">
-        <div class="content">
+  <!-- DELIVERABLES -->
+  <section class="section hero is-small">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full">
+          <div class="content">
+            <h2 class="title is-3 section-title">Deliverables & Links</h2>
 
-          <h2 class="title is-3" style="background: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7);
-            color: white; padding: 10px; border-radius: 10px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); text-align: center;">
-            My Contribution
-          </h2>
+            <!-- Different from teammate: minimal deliverables + clear list -->
+            <div class="soft-card">
+              <p style="margin-bottom:.6rem;">
+                Below are the resources related to my work and the team project.
+              </p>
+              <ul class="mini-list">
+                <li><b>Team Repository:</b> <a href="YOUR_GITHUB_REPO_URL_HERE" target="_blank" rel="noopener noreferrer">GitHub Link</a></li>
+                <li><b>Team Page:</b> <a href="YOUR_TEAM_PAGE_URL_HERE" target="_blank" rel="noopener noreferrer">Project Webpage</a></li>
+                <li><b>Slides:</b> <a href="YOUR_SLIDES_URL_HERE" target="_blank" rel="noopener noreferrer">Presentation Slides</a></li>
+              </ul>
+              <div class="chiprow">
+                <span class="chip ok">Repo</span>
+                <span class="chip alt">Webpage</span>
+                <span class="chip">Slides</span>
+              </div>
+            </div>
 
-          <p><b>Summary:</b></p>
-          <ul>
-            <li>Weather API integration and XML data processing</li>
-            <li>Real-time weather data output on Wokwi Serial Monitor</li>
-            <li>OLED-based real-time graph visualization</li>
-          </ul>
-
-          <hr>
-
-          <h3 class="title is-4">1. Weather API Integration & Data Processing</h3>
-          <img src="static/images/contrib_api.png">
-          <p>
-            This image shows the parsed XML response from the KMA weather API. I implemented the full data acquisition
-            pipeline, extracting temperature, humidity, rainfall, and wind speed values and converting them into
-            display-ready formats.
-          </p>
-
-          <h3 class="title is-4">2. Wokwi Serial Monitor Output</h3>
-          <img src="static/images/contrib_serial.png">
-          <p>
-            This figure demonstrates real-time weather data printed on the Wokwi Serial Monitor. I structured the
-            serial output with clear labels and units to support efficient debugging and monitoring.
-          </p>
-
-          <h3 class="title is-4">3. OLED-Based Graph Visualization</h3>
-          <img src="static/images/contrib_oled.png">
-          <p>
-            This image presents the OLED-based graphical visualization I implemented. Weather data is displayed as
-            real-time graphs, enabling intuitive understanding of trends rather than raw numeric values.
-          </p>
-
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- METHOD -->
-<section class="section hero is-small">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered">
-      <div class="column is-full">
-        <div class="content">
-          <h2 class="title is-3" style="background: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7);
-            color: white; padding: 10px; border-radius: 10px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); text-align: center;">
-            Method
-          </h2>
-          <p>System flow and tools used in this project.</p>
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This page was built using the
+              <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener noreferrer">
+                Academic Project Page Template
+              </a>
+              adopted from <a href="https://nerfies.github.io" target="_blank" rel="noopener noreferrer">Nerfies</a>.
+              <br>
+              Licensed under
+              <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">
+                Creative Commons Attribution-ShareAlike 4.0 International License
+              </a>.
+            </p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="container">
-    <div class="content has-text-centered">
-      <p>
-        This page was built using the Academic Project Page Template.
-      </p>
-    </div>
-  </div>
-</footer>
+  </footer>
 
 </body>
 </html>

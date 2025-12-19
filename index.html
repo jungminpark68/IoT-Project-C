@@ -463,14 +463,587 @@
             </div>
 
             <div class="soft-card">
-              <h3 class="title is-5" style="margin-bottom:.55rem;">Code Snippets (Optional)</h3>
-              <p style="margin-bottom:.6rem;">
-                If you want to include code here, paste your Arduino/C++ functions (API request, parser, serial print, OLED graph render).
-              </p>
-              <p class="is-size-7" style="opacity:.85;">
-                Tip: You can copy the “Copy button” UI from the teammate page if you want, but keeping this simpler makes it look different.
-              </p>
-            </div>
+  <div style="display:flex; align-items:center; justify-content:space-between; gap:.8rem; flex-wrap:wrap;">
+    <h3 class="title is-5" style="margin-bottom:.55rem;">Code Snippets</h3>
+    <button class="button is-small is-rounded is-dark" onclick="copyCode('code-snippet-jm')">
+      Copy
+    </button>
+  </div>
+
+  <p style="margin-bottom:.6rem;">
+    Below is a core implementation snippet that covers <b>KMA API parsing</b>, <b>Serial logging</b>, and <b>OLED graph visualization</b>.
+  </p>
+
+  <pre style="border-radius:14px; box-shadow: var(--cardshadow); border:1px solid rgba(0,0,0,0.08); overflow:auto;">
+<code id="code-snippet-jm">#include &lt;WiFi.h&gt;
+#include &lt;WiFiClientSecure.h&gt;
+#include &lt;HTTPClient.h&gt;
+#include &lt;ArduinoJson.h&gt;
+#include &lt;time.h&gt;
+
+#include &lt;Wire.h&gt;
+#include &lt;Adafruit_GFX.h&gt;
+#include &lt;Adafruit_SSD1306.h&gt;
+#include &lt;math.h&gt;
+
+// =============================
+// OLED 설정
+// =============================
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+
+// 메인 OLED (0x3C)
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &amp;Wire, -1);
+// 그래프 OLED (0x3D)
+Adafruit_SSD1306 graphDisplay(SCREEN_WIDTH, SCREEN_HEIGHT, &amp;Wire, -1);
+
+// =============================
+// LED PIN 설정
+// =============================
+#define LED_RED     14
+#define LED_YELLOW  12
+#define LED_BLUE    27
+
+// =============================
+// 버튼 PIN (그래프 모드 전환)
+// =============================
+#define BTN_PIN 33
+int graphMode = 0;  // 0=temp, 1=humid, 2=rain, 3=wind
+
+// =============================
+// 버튼 PIN (현재 위치)
+// =============================
+#define BUTTON_PIN 15
+int lastButtonState = HIGH; // (INPUT_PULLUP이므로 기본이 HIGH)
+unsigned long lastDebounceTime = 0;
+unsigned long debounceDelay = 50; // 채터링 방지 (50ms)
+
+// =============================
+// 최근 12시간 그래프 데이터
+// =============================
+float tempHistory[12];
+float humidHistory[12];
+float rainHistory[12];
+float windHistory[12];
+
+// -----------------------------
+// WiFi, API 설정
+// -----------------------------
+const char* ssid     = "Wokwi-GUEST";
+const char* password = "";
+const char* host    = "https://apihub.kma.go.kr";
+const char* authKey = "wLWQLTOfRxC1kC0zn7cQ2g";
+
+const long  gmtOffset_sec      = 9 * 3600;
+const int   daylightOffset_sec = 0;
+const char* ntpServer          = "pool.ntp.org";
+
+// 좌표 (Serial 입력)
+int nx = 60;
+int ny = 127;
+
+float myLat;
+float myLon;
+
+// =============================
+// 프로토타입
+// =============================
+bool extractWeather(const String&amp;, float&amp;, float&amp;, float&amp;, float&amp;, float&amp;);
+void applyOutputs(float, float, float, float, float);
+void getWeatherHistory12h();
+void drawGraph();
+void getGeoLocation();
+
+// =============================
+// Setup
+// =============================
+void setup() {
+  Serial.begin(115200);
+  delay(500);
+
+  Wire.begin(21, 22);
+
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)){
+    Serial.println("Main OLED FAIL");
+    while(1);
+  }
+  display.clearDisplay();
+  display.display();
+
+  if(!graphDisplay.begin(SSD1306_SWITCHCAPVCC, 0x3D)){
+    Serial.println("Graph OLED FAIL");
+    while(1);
+  }
+  graphDisplay.clearDisplay();
+  graphDisplay.display();
+
+  pinMode(LED_RED, OUTPUT);
+  pinMode(LED_YELLOW, OUTPUT);
+  pinMode(LED_BLUE, OUTPUT);
+  pinMode(BTN_PIN, INPUT_PULLUP);
+
+  // gps
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
+
+  for (int i = 0; i &lt; 12; i++){
+    tempHistory[i]  = NAN;
+    humidHistory[i] = NAN;
+    rainHistory[i]  = NAN;
+    windHistory[i]  = NAN;
+  }
+
+  Serial.println("=== ESP32 + KMA Weather (12h graph) ===");
+  Serial.println("Enter grid nx ny (ex: 60 127):");
+
+  WiFi.begin(ssid, password);
+  Serial.print("Connecting WiFi");
+  while(WiFi.status() != WL_CONNECTED){
+    Serial.print(".");
+    delay(300);
+  }
+  Serial.println("\nWiFi connected!");
+
+  configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
+  Serial.println("Syncing time...");
+  struct tm ti;
+  while(!getLocalTime(&amp;ti)){
+    Serial.println("  retry...");
+    delay(300);
+  }
+  Serial.println("Time synced.");
+}
+
+// =============================
+// Loop
+// =============================
+void loop(){
+  // 현재 버튼 상태 읽기
+  int reading = digitalRead(BUTTON_PIN);
+  // 버튼 상태가 바뀌었는지 확인 (디바운싱 처리)
+  if (reading != lastButtonState) {
+    lastDebounceTime = millis();
+  }
+
+  if ((millis() - lastDebounceTime) &gt; debounceDelay) {
+    if (reading == LOW) {
+      Serial.println("\n[Button Pressed!] Requesting Location...");
+      getGeoLocation();
+      while(digitalRead(BUTTON_PIN) == LOW) {
+        delay(10);
+      }
+    }
+  }
+
+  lastButtonState = reading;
+
+  // 좌표 입력
+  if (Serial.available()){
+    int newX = Serial.parseInt();
+    int newY = Serial.parseInt();
+    if (newX &gt; 0 &amp;&amp; newY &gt; 0){
+      nx = newX;
+      ny = newY;
+      Serial.print("\n📌 New Grid -&gt; ");
+      Serial.print(nx);
+      Serial.print(", ");
+      Serial.println(ny);
+      getWeatherHistory12h();
+    }
+  }
+
+  // 버튼 - 그래프 모드 전환
+  static int lastBtn = HIGH;
+  int nowBtn = digitalRead(BTN_PIN);
+
+  if(lastBtn == HIGH &amp;&amp; nowBtn == LOW){
+    graphMode = (graphMode + 1) % 4;
+    Serial.print("Graph mode -&gt; ");
+    if      (graphMode == 0) Serial.println("Temperature");
+    else if (graphMode == 1) Serial.println("Humidity");
+    else if (graphMode == 2) Serial.println("Rain (log)");
+    else                     Serial.println("Wind");
+    drawGraph();
+    delay(250);
+  }
+
+  lastBtn = nowBtn;
+}
+
+// =============================
+// 12시간 데이터 가져오기
+// =============================
+void getWeatherHistory12h() {
+  if(WiFi.status() != WL_CONNECTED) return;
+
+  struct tm ti;
+  getLocalTime(&amp;ti);
+  time_t now = mktime(&amp;ti);
+
+  Serial.println("\n=== Fetch 12h history ===");
+
+  // 1) 현재 먼저 가져와서 LED+OLED 갱신
+  {
+    struct tm* bt = localtime(&amp;now);
+
+    char baseDate[9];
+    sprintf(baseDate, "%04d%02d%02d", bt-&gt;tm_year+1900, bt-&gt;tm_mon+1, bt-&gt;tm_mday);
+    char baseTime[5];
+    sprintf(baseTime, "%02d00", bt-&gt;tm_hour);
+
+    String url = String(host) +
+      "/api/typ02/openApi/VilageFcstInfoService_2.0/getUltraSrtNcst"
+      "?authKey=" + authKey +
+      "&amp;dataType=JSON"
+      "&amp;numOfRows=60"
+      "&amp;pageNo=1"
+      "&amp;base_date=" + baseDate +
+      "&amp;base_time=" + baseTime +
+      "&amp;nx=" + nx +
+      "&amp;ny=" + ny;
+
+    Serial.println("[Now] URL:");
+    Serial.println(url);
+
+    WiFiClientSecure client; client.setInsecure();
+    HTTPClient http;
+    if(http.begin(client, url)){
+      int code = http.GET();
+      Serial.print("  HTTP code: ");
+      Serial.println(code);
+      if(code == 200){
+        String js = http.getString();
+        float T,H,RN,W,VEC;
+        if(extractWeather(js, T,H,RN,W,VEC)){
+          Serial.print("  Now T=");  Serial.print(T);
+          Serial.print("C, H=");    Serial.print(H);
+          Serial.print("%, RN=");   Serial.print(RN);
+          Serial.print("mm, W=");   Serial.print(W);
+          Serial.print("m/s, VEC=");
+          Serial.println(VEC);
+
+          applyOutputs(T,H,RN,W,VEC);
+
+          tempHistory[11]  = T;
+          humidHistory[11] = H;
+          rainHistory[11]  = RN;
+          windHistory[11]  = W;
+        }
+      }
+      http.end();
+    }
+  }
+
+  // 2) 나머지 11시간 채우기 (오래된 것부터)
+  for(int i=0;i&lt;11;i++){
+    time_t t = now - (11 - i)*3600;
+    struct tm* bt = localtime(&amp;t);
+
+    char baseDate[9];
+    sprintf(baseDate,"%04d%02d%02d",bt-&gt;tm_year+1900,bt-&gt;tm_mon+1,bt-&gt;tm_mday);
+    char baseTime[5];
+    sprintf(baseTime,"%02d00",bt-&gt;tm_hour);
+
+    String url = String(host) +
+      "/api/typ02/openApi/VilageFcstInfoService_2.0/getUltraSrtNcst"
+      "?authKey=" + authKey +
+      "&amp;dataType=JSON"
+      "&amp;numOfRows=60"
+      "&amp;pageNo=1"
+      "&amp;base_date=" + baseDate +
+      "&amp;base_time=" + baseTime +
+      "&amp;nx=" + nx +
+      "&amp;ny=" + ny;
+
+    Serial.print("["); Serial.print(i); Serial.print("] ");
+    Serial.print(baseDate); Serial.print(" ");
+    Serial.print(baseTime); Serial.println(" URL:");
+    Serial.println(url);
+
+    WiFiClientSecure client; client.setInsecure();
+    HTTPClient http;
+
+    if(http.begin(client, url)){
+      int code = http.GET();
+      Serial.print("  HTTP code: ");
+      Serial.println(code);
+      if(code == 200){
+        String js = http.getString();
+        float T,H,RN,W,VEC;
+        if(extractWeather(js, T,H,RN,W,VEC)){
+          tempHistory[i]  = T;
+          humidHistory[i] = H;
+          rainHistory[i]  = RN;
+          windHistory[i]  = W;
+
+          Serial.print("  -&gt; T=");  Serial.print(T);
+          Serial.print("C, H=");    Serial.print(H);
+          Serial.print("%, RN=");   Serial.print(RN);
+          Serial.print("mm, W=");   Serial.print(W);
+          Serial.print("m/s, VEC=");
+          Serial.println(VEC);
+        }
+      }
+      http.end();
+    }
+
+    delay(250);
+  }
+
+  // 그래프 갱신
+  drawGraph();
+}
+
+// =============================
+// JSON 파싱
+// =============================
+bool extractWeather(const String&amp; json,
+                    float &amp;T1H, float &amp;REH,
+                    float &amp;RN1, float &amp;WSD, float &amp;VEC){
+
+  DynamicJsonDocument doc(16384);
+  DeserializationError err = deserializeJson(doc, json);
+  if(err){
+    Serial.print("JSON error: ");
+    Serial.println(err.c_str());
+    return false;
+  }
+
+  JsonArray arr = doc["response"]["body"]["items"]["item"].as&lt;JsonArray&gt;();
+  if(arr.isNull()) return false;
+
+  T1H=REH=RN1=WSD=VEC=NAN;
+
+  for(JsonObject o : arr){
+    const char* cat = o["category"];
+    float v = o["obsrValue"].as&lt;float&gt;();
+
+    if(strcmp(cat,"T1H")==0) T1H=v;
+    if(strcmp(cat,"REH")==0) REH=v;
+    if(strcmp(cat,"RN1")==0) RN1=v;
+    if(strcmp(cat,"WSD")==0) WSD=v;
+    if(strcmp(cat,"VEC")==0) VEC=v;
+  }
+  return !isnan(T1H) &amp;&amp; !isnan(REH);
+}
+
+// =============================
+// LED + Main OLED
+// =============================
+void applyOutputs(float T, float H, float RN, float W, float VEC){
+  // LED
+  if(RN &gt; 0){
+    digitalWrite(LED_BLUE, HIGH);
+    digitalWrite(LED_RED, LOW);
+    digitalWrite(LED_YELLOW, LOW);
+    Serial.println("LED: Rainy (Blue)");
+  }
+  else if(W &gt;= 3.5){
+    digitalWrite(LED_YELLOW, HIGH);
+    digitalWrite(LED_RED, LOW);
+    digitalWrite(LED_BLUE, LOW);
+    Serial.println("LED: Windy (Yellow)");
+  }
+  else if(RN==0 &amp;&amp; H&lt;=50){
+    digitalWrite(LED_RED, HIGH);
+    digitalWrite(LED_YELLOW, LOW);
+    digitalWrite(LED_BLUE, LOW);
+    Serial.println("LED: Sunny (Red)");
+  }
+  else{
+    digitalWrite(LED_RED,LOW);
+    digitalWrite(LED_YELLOW,LOW);
+    digitalWrite(LED_BLUE,LOW);
+    Serial.println("LED: OFF");
+  }
+
+  // 메인 OLED
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+
+  display.setCursor(0,0);
+  display.printf("Grid %d,%d\n", nx, ny);
+  display.printf("Temp : %.1f C\n", T);
+  display.printf("Humid: %.0f %%\n", H);
+  display.printf("Rain : %.1f mm\n", RN);
+  display.printf("Wind : %.1f m/s\n", W);
+
+  struct tm ti;
+  getLocalTime(&amp;ti);
+  display.printf("Time : %02d:%02d\n", ti.tm_hour, ti.tm_min);
+
+  display.display();
+
+  Serial.println("=== Latest Weather Applied ===");
+}
+
+// =============================
+// 그래프 표시
+// =============================
+void drawGraph(){
+  graphDisplay.clearDisplay();
+  graphDisplay.setTextSize(1);
+  graphDisplay.setTextColor(SSD1306_WHITE);
+
+  float* src;
+  const char* title;
+
+  switch(graphMode){
+    case 0: src=tempHistory;  title="Temp (C)";       break;
+    case 1: src=humidHistory; title="Humid (%)";      break;
+    case 2: src=rainHistory;  title="Rain (mm,log)";  break;
+    default: src=windHistory; title="Wind (m/s)";     break;
+  }
+
+  // 유효 확인
+  bool ok=false;
+  for(int i=0;i&lt;12;i++){ if(!isnan(src[i])){ ok=true; break; } }
+  if(!ok){
+    graphDisplay.setCursor(0,20);
+    graphDisplay.print("No data");
+    graphDisplay.display();
+    return;
+  }
+
+  // 원래 값 min/max
+  float minO=9999,maxO=-9999;
+  for(int i=0;i&lt;12;i++){
+    if(!isnan(src[i])){
+      if(src[i] &lt; minO) minO = src[i];
+      if(src[i] &gt; maxO) maxO = src[i];
+    }
+  }
+  if(minO==maxO) maxO=minO+1;
+
+  // y축용 맵값 (rain은 log scale)
+  float ymap[12];
+  for(int i=0;i&lt;12;i++){
+    if(isnan(src[i])){ ymap[i]=NAN; continue; }
+    if(graphMode==2)
+      ymap[i]=log10f(1+max(0.0f,src[i]));
+    else
+      ymap[i]=src[i];
+  }
+
+  float minV=9999,maxV=-9999;
+  for(int i=0;i&lt;12;i++){
+    if(!isnan(ymap[i])){
+      if(ymap[i] &lt; minV) minV = ymap[i];
+      if(ymap[i] &gt; maxV) maxV = ymap[i];
+    }
+  }
+  if(minV==maxV) maxV=minV+1;
+
+  // 제목 + min/max
+  graphDisplay.setCursor(0,0);
+  graphDisplay.print(title);
+
+  graphDisplay.setCursor(0,10);
+  graphDisplay.printf("min %.1f max %.1f",minO,maxO);
+
+  Serial.print("Graph[");
+  Serial.print(title);
+  Serial.print("] min=");
+  Serial.print(minO);
+  Serial.print(", max=");
+  Serial.println(maxO);
+
+  // 그래프 좌표
+  int gTop=18, gBot=48;
+  int gHeight = gBot - gTop;
+  int gLeft=8, gRight=120;
+  float stepX=(float)(gRight-gLeft)/11.0f;
+
+  int lastX=-1,lastY=-1;
+
+  for(int i=0;i&lt;12;i++){
+    if(isnan(ymap[i])) continue;
+
+    int x = gLeft + round(stepX*i);
+    int y = gBot - round((ymap[i]-minV)*gHeight/(maxV-minV));
+
+    graphDisplay.fillRect(x-1,y-1,3,3,SSD1306_WHITE);
+
+    if(lastX&gt;=0){
+      graphDisplay.drawLine(lastX,lastY,x,y,SSD1306_WHITE);
+    }
+
+    lastX=x; lastY=y;
+  }
+
+  // 시간 축
+  struct tm ti;
+  getLocalTime(&amp;ti);
+  int nowH=ti.tm_hour;
+
+  int idxs[5]={0,3,6,9,11};
+
+  for(int k=0;k&lt;5;k++){
+    int idx = idxs[k];
+    int hour = (nowH - (11 - idx) + 24) % 24;
+
+    int x = gLeft + round(stepX*idx);
+
+    graphDisplay.drawFastVLine(x,gBot+1,3,SSD1306_WHITE);
+
+    char buf[4];
+    sprintf(buf,"%02d",hour);
+
+    int labelX = x-6;
+    if(labelX &lt; 0) labelX = 0;
+    int labelY = gBot+4;
+
+    graphDisplay.setCursor(labelX,labelY);
+    graphDisplay.print(buf);
+  }
+
+  graphDisplay.display();
+}
+
+void getGeoLocation() {
+  if (WiFi.status() == WL_CONNECTED) {
+    HTTPClient http;
+
+    Serial.println("Requesting location from ip-api.com...");
+    http.begin("http://ip-api.com/json/");
+
+    int httpCode = http.GET();
+
+    if (httpCode &gt; 0) {
+      String payload = http.getString();
+
+      StaticJsonDocument&lt;1024&gt; doc;
+      DeserializationError error = deserializeJson(doc, payload);
+
+      if (!error) {
+        myLat = doc["lat"];
+        myLon = doc["lon"];
+        String country = doc["country"];
+        String city = doc["city"];
+
+        Serial.println("-----------------------------");
+        Serial.println(" [Current Location via IP] ");
+        Serial.print(" Country: "); Serial.println(country);
+        Serial.print(" City:    "); Serial.println(city);
+        Serial.print(" Lat:     "); Serial.println(myLat, 6);
+        Serial.print(" Lon:     "); Serial.println(myLon, 6);
+        Serial.println("-----------------------------");
+      } else {
+        Serial.print("deserializeJson() failed: ");
+        Serial.println(error.c_str());
+      }
+    } else {
+      Serial.println("Error on HTTP request");
+    }
+    http.end();
+  }
+}</code></pre>
+
+  <p class="is-size-7" style="opacity:.85; margin-top:.7rem;">
+    Note: This is an excerpt for presentation. The full project code is available in the team repository.
+  </p>
+</div>
+
 
           </div>
         </div>

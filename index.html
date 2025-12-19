@@ -33,362 +33,143 @@
   <script src="static/js/index.js"></script>
 
   <title>Weather Tracker IoT</title>
+
   <style>
     .publication-title {
       font-size: 3rem;
       font-weight: bold;
       display: flex;
-      justify-content: center; /* ✅ 가운데 정렬 */
+      justify-content: center;
       align-items: center;
       gap: 0.5rem;
     }
-
     .title-text {
       background: linear-gradient(90deg, #00f260, #0575e6, #ff0080, #7928ca);
       background-size: 200% 200%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow:
-      2px 2px 4px rgba(0, 0, 0, 0.1),
-      4px 4px 8px rgba(0, 0, 0, 0.2);
       animation: gradientShift 30s infinite ease-in-out;
     }
-
     @keyframes gradientShift {
       0% { background-position: 48% 50%; }
       50% { background-position: 52% 50%; }
       100% { background-position: 48% 50%; }
-    }
-
-    .publication-links .button {
-      background: linear-gradient(45deg, #00f260, #0575e6, #ff0080, #7928ca);
-      background-size: 300% 300%;
-      color: white !important;
-      font-weight: 600;
-      border: none;
-      transition: background-position 3s ease;
-    }
-
-    .publication-links .button:hover {
-      background-position: 100% 50%;
-      color: #fff !important;
-    }
-
-    .publication-links .link-block {
-      margin: 0 0.3rem;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- HEADER -->
-  <section class="hero">
-    <div class="hero-body">
-      <div class="container is-max-desktop">
-        <div class="columns is-centered">
-          <div class="column has-text-centered">
-            <h1 class="title publication-title">
-              <span class="title-text">Weather Tracker IoT </span>
-            </h1>
-            <div class="is-size-5 publication-authors">
-              <span class="author-block">
-                <a href="https://github.com/parkjh21c" target="_blank">Jiho Park</a><sup>1</sup>,
-                <a href="https://github.com/jungminpark68" target="_blank">Jeongmin Park</a><sup>2</sup>,
-                <a href="https://github.com/JiyunElizabethYang" target="_blank">Jiyun Yang</a><sup>3</sup>
-              </span>
-              </br>
-              <span class="author-block">
-                <a href="https://github.com/zubair1811" target="_blank">Class Incharge: Muhammad Zubair Islam</a><sup>4</sup>
-              </span>
-            </div>
-
-            <br>
-            <div class="is-size-5 publication-authors">
-              <div style="text-align: center; margin-bottom: 5px;">
-                <span class="author-block"><sup>1</sup> Sejong University, Department of Intelligent Mechatronics Engineering</span> </br>
-                <span class="author-block"><sup>2</sup> Sejong University, Department of Intelligent Mechatronics Engineering</span> </br>
-                <span class="author-block"><sup>3</sup> Sejong University, Department of Intelligent Mechatronics Engineering</span> </br>
-                <span class="author-block"><sup>4</sup> Sejong University, Department of AI and Robotics</span>
-              </div>
-            </div>
-
-            <div class="column has-text-centered">
-              <div class="publication-links">
-
-                <!-- Slides (local PDF) -->
-                <span class="link-block">
-                  <a href="static/pdf/IoT_Project_Midterm_Presentation.pdf"
-                     target="_blank" rel="noopener"
-                     class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon">
-                      <i class="fas fa-file-alt" style="color: #D3D3D3;"></i>
-                    </span>
-                    <span>Slides</span>
-                  </a>
-                </span>
-
-                <!-- GitHub Project -->
-                <span class="link-block">
-                  <a href="https://github.com/jungminpark68/IoT-Project-C"
-                     target="_blank" rel="noopener"
-                     class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon">
-                      <i class="fab fa-github" style="color: black;"></i>
-                    </span>
-                    <span>Code</span>
-                  </a>
-                </span>
-
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WELCOME SECTION -->
-  <section class="section hero is-small">
+<!-- HEADER (원본 그대로) -->
+<section class="hero">
+  <div class="hero-body">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
-        <div class="column is-full has-text-centered">
-          <div class="content">
-            <h2 class="title is-3"
-                style="background: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7);
-                       color: white; padding: 10px; border-radius: 10px;
-                       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); text-align: center;">
-              Welcome to Use This Project
-            </h2>
+        <div class="column has-text-centered">
 
-            <div style="border: none; border-radius: 15px;
-                        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
-                        overflow: hidden; background: linear-gradient(45deg, #0575e6, #7928ca81);
-                        padding: 10px; display: flex; justify-content: center;">
-              
-              <iframe
-                src="static/pdf/IoT_Project_Midterm_Presentation.pdf"
-                width="800px"
-                height="450px"
-                style="border: none; border-radius: 15px;
-                       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);">
-              </iframe>
+          <h1 class="title publication-title">
+            <span class="title-text">Weather Tracker IoT</span>
+          </h1>
 
-            </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://github.com/parkjh21c" target="_blank">Jiho Park</a><sup>1</sup>,
+              <a href="https://github.com/jungminpark68" target="_blank">Jeongmin Park</a><sup>2</sup>,
+              <a href="https://github.com/JiyunElizabethYang" target="_blank">Jiyun Yang</a><sup>3</sup>
+            </span><br>
+            <span class="author-block">
+              <a href="https://github.com/zubair1811" target="_blank">
+                Class Incharge: Muhammad Zubair Islam
+              </a><sup>4</sup>
+            </span>
           </div>
+
+          <br>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup> Sejong University, Dept. of Intelligent Mechatronics Engineering</span><br>
+            <span class="author-block"><sup>2</sup> Sejong University, Dept. of Intelligent Mechatronics Engineering</span><br>
+            <span class="author-block"><sup>3</sup> Sejong University, Dept. of Intelligent Mechatronics Engineering</span><br>
+            <span class="author-block"><sup>4</sup> Sejong University, Dept. of AI and Robotics</span>
+          </div>
+
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- OVERVIEW -->
-  <section class="section hero is-small">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column is-full">
-          <div class="content">
-            <h2 class="title is-3" style="background: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7); color: white;
-              padding: 10px; border-radius: 10px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); text-align: center;">
-              Overview
-            </h2>
-            <div class="content has-text-justified">
-              <p><b>Weather Tracker IoT</b> is a location-based smart weather monitoring system that retrieves real-time climate information from the <b>Korea Meteorological Administration (KMA)</b> API. It automatically detects the current GPS location and visualizes weather data such as temperature, humidity, and light conditions through simulated sensors in <b>Wokwi</b>.</p>
-              <ul>
-                <li>🌦️ <b>Location Check:</b> Retrieves current coordinates and maps them to Korean region names.</li>
-                <li>🌡️ <b>Weather Display:</b> Presents temperature and humidity in real time.</li>
-                <li>💡 <b>Light Sensor:</b> Adjusts LED brightness according to weather conditions.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
+<!-- OVERVIEW (원본 그대로) -->
+<section class="section hero is-small">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Overview</h2>
+    <p>
+      Weather Tracker IoT is a location-based smart weather monitoring system that retrieves
+      real-time climate information from the Korea Meteorological Administration (KMA) API.
+    </p>
+  </div>
+</section>
+
+<!-- MY CONTRIBUTION -->
+<section class="section hero is-small">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">My Contribution (Jeongmin Park)</h2>
+
+    <ul>
+      <li>KMA weather API integration and data processing</li>
+      <li>Real-time output on Wokwi Serial Monitor</li>
+      <li>OLED-based weather graph visualization</li>
+    </ul>
+
+    <hr>
+
+    <h3 class="title is-4">1. Weather API Integration</h3>
+    <img src="static/images/contrib_api.png">
+    <p>
+      Parsed real-time weather data (temperature, humidity, rainfall, wind)
+      from the KMA API and prepared values for visualization.
+    </p>
+
+    <h3 class="title is-4">2. Serial Monitor Output</h3>
+    <img src="static/images/contrib_serial.png">
+    <p>
+      Printed structured weather logs to the Wokwi Serial Monitor for debugging and validation.
+    </p>
+
+    <h3 class="title is-4">3. OLED Graph Visualization</h3>
+    <img src="static/images/contrib_oled.png">
+    <p>
+      Implemented OLED-based graph visualization to show weather trends intuitively.
+    </p>
+
+    <div style="margin-top:20px;">
+      <video autoplay controls muted loop style="width:100%;">
+        <source src="static/images/jm_demo.mp4" type="video/mp4">
+      </video>
+      <p class="has-text-centered is-size-7">
+        Demo video showing real-time weather update and visualization.
+      </p>
     </div>
-  </section>
 
-  <!-- MY CONTRIBUTION (Jeongmin Park / jungminpark) -->
-  <section class="section hero is-small">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column is-full">
-          <div class="content">
-            <h2 class="title is-3" style="background: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7); color: white;
-              padding: 10px; border-radius: 10px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); text-align: center;">
-              My Contribution (Jeongmin Park)
-            </h2>
+  </div>
+</section>
 
-            <!-- Summary 1~3 -->
-            <div class="content has-text-justified">
-              <p><b>Summary of my role:</b></p>
-              <ul>
-                <li>✅ Integrated the <b>KMA weather API</b> and implemented <b>data parsing/processing</b> (Temp/Humidity/Rain/Wind).</li>
-                <li>✅ Printed <b>real-time structured logs</b> to the <b>Wokwi Serial Monitor</b> for monitoring and debugging.</li>
-                <li>✅ Implemented <b>OLED graph visualization</b> to show weather trends intuitively.</li>
-              </ul>
-            </div>
+<!-- METHOD (원본 유지) -->
+<section class="section hero is-small">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Method</h2>
+    <p>System flow and tools used.</p>
+  </div>
+</section>
 
-            <hr>
-
-            <!-- Role 1 -->
-            <h3 class="title is-4">1) KMA Weather API Integration & Data Processing</h3>
-            <div style="border: none; border-radius: 15px;
-                        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
-                        overflow: hidden; background: linear-gradient(45deg, rgba(5,117,230,0.10), rgba(121,40,202,0.08));
-                        padding: 14px;">
-              <div class="columns is-vcentered is-variable is-5">
-                <div class="column is-7">
-                  <div class="content has-text-justified">
-                    <p>
-                      I built the end-to-end pipeline for retrieving real-time weather information from the
-                      <b>Korea Meteorological Administration (KMA)</b> API. The response was parsed and converted into
-                      stable, display-ready values. In particular, I focused on extracting core parameters that are
-                      meaningful for users and downstream modules:
-                      <b>temperature</b>, <b>humidity</b>, <b>rainfall</b>, and <b>wind direction/speed</b>.
-                    </p>
-                    <ul>
-                      <li>Handled request timing logic to avoid missing the latest update.</li>
-                      <li>Parsed response fields into numeric values and normalized units/format.</li>
-                      <li>Prepared the processed values to be reused by Serial output and OLED visualization.</li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="column is-5">
-                  <figure class="image" style="border-radius: 14px; overflow: hidden; box-shadow: 0 8px 16px rgba(0,0,0,0.22);">
-                    <img src="static/images/jm_api_parse.png" alt="KMA API parsing result">
-                  </figure>
-                  <p class="has-text-centered is-size-7" style="margin-top:.55rem; opacity:.85;">
-                    Figure 1. Screenshot of parsed KMA API response showing extracted weather fields (Temp/Humid/Rain/Wind).
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <br>
-
-            <!-- Role 2 -->
-            <h3 class="title is-4">2) Real-time Output on Wokwi Serial Monitor</h3>
-            <div style="border: none; border-radius: 15px;
-                        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
-                        overflow: hidden; background: linear-gradient(45deg, rgba(121,40,202,0.10), rgba(5,117,230,0.08));
-                        padding: 14px;">
-              <div class="columns is-vcentered is-variable is-5">
-                <div class="column is-7">
-                  <div class="content has-text-justified">
-                    <p>
-                      To make debugging reliable during simulation, I formatted and printed weather values in real time
-                      on the <b>Wokwi Serial Monitor</b>. This allowed us to verify that the API call and parsing logic
-                      were working correctly (and continuously updating) without relying only on the display.
-                    </p>
-                    <ul>
-                      <li>Added labeled logs with units to avoid ambiguity (e.g., m/s, mm, °C).</li>
-                      <li>Confirmed refresh timing and detected stale/missing values quickly.</li>
-                      <li>Improved team debugging speed by making internal states visible immediately.</li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="column is-5">
-                  <figure class="image" style="border-radius: 14px; overflow: hidden; box-shadow: 0 8px 16px rgba(0,0,0,0.22);">
-                    <img src="static/images/jm_serial_monitor.png" alt="Wokwi Serial Monitor output">
-                  </figure>
-                  <p class="has-text-centered is-size-7" style="margin-top:.55rem; opacity:.85;">
-                    Figure 2. Serial Monitor output used to validate real-time updates and debugging of parsed weather values.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <br>
-
-            <!-- Role 3 -->
-            <h3 class="title is-4">3) OLED Graph Visualization</h3>
-            <div style="border: none; border-radius: 15px;
-                        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
-                        overflow: hidden; background: linear-gradient(45deg, rgba(5,117,230,0.10), rgba(242,0,181,0.06));
-                        padding: 14px;">
-              <div class="columns is-vcentered is-variable is-5">
-                <div class="column is-7">
-                  <div class="content has-text-justified">
-                    <p>
-                      I implemented an <b>OLED-based graph visualization</b> to represent changes in weather data over time.
-                      Instead of only printing raw numbers, the OLED graph helps users quickly interpret trends
-                      (e.g., temperature/humidity fluctuations) at a glance.
-                    </p>
-                    <ul>
-                      <li>Mapped numeric ranges to pixel ranges for stable visualization.</li>
-                      <li>Designed a compact layout suitable for small OLED resolution.</li>
-                      <li>Refreshed the display smoothly to keep the UI readable.</li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="column is-5">
-                  <figure class="image" style="border-radius: 14px; overflow: hidden; box-shadow: 0 8px 16px rgba(0,0,0,0.22);">
-                    <img src="static/images/jm_oled_graph.png" alt="OLED graph visualization">
-                  </figure>
-                  <p class="has-text-centered is-size-7" style="margin-top:.55rem; opacity:.85;">
-                    Figure 3. OLED screen showing graph-based visualization for intuitive understanding of weather trends.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- METHOD -->
-  <section class="section hero is-small">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column is-full">
-          <div class="content">
-            <h2 class="title is-3" style="background: linear-gradient(45deg, #f200b571, #eb419f8e, #0077ff5b, #2881cad7);
-              color: white; padding: 10px; border-radius: 10px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); text-align: center;">
-              Method
-            </h2>
-            <div class="content has-text-justified">
-              <p><b>System Flow:</b></p>
-              <ol>
-                <li>1️⃣ Retrieve weather XML data from <b>KMA API Hub</b> using an HTTP client.</li>
-                <li>2️⃣ Generate random GPS coordinates in Korea for simulated location testing.</li>
-                <li>3️⃣ Convert coordinates to city and district names for weather mapping.</li>
-                <li>4️⃣ Simulate <b>DHT22</b> (temperature/humidity), <b>light sensors</b>, and <b>LEDs</b> using <b>Wokwi</b>.</li>
-                <li>5️⃣ Print and visualize data in <b>VSCode Serial Monitor</b> for real-time tracking and debugging.</li>
-              </ol>
-              <p><b>Tools Used:</b> Wokwi Simulator, ESP32 microcontroller, KMA API, VSCode (C++ environment).</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container">
-      <div class="columns is-centered">
-        <div class="column is-8">
-          <div class="content">
-            <p>
-              This page was built using the 
-              <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">
-                Academic Project Page Template
-              </a> 
-              which was adopted from the 
-              <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
-              You are free to borrow the layout of this website, we just ask that you link back to this page in the footer. 
-              <br>
-              This website is licensed under a 
-              <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">
-                Creative Commons Attribution-ShareAlike 4.0 International License
-              </a>.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
+<!-- FOOTER (원본 유지) -->
+<footer class="footer">
+  <div class="container has-text-centered">
+    <p>
+      Built using Academic Project Page Template · Nerfies
+    </p>
+  </div>
+</footer>
 
 </body>
 </html>
